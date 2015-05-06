@@ -37,8 +37,10 @@ include_directories(
 	external/glew-1.9.0/include/
 	.
 )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(ALL_LIBS
+  -w
 	${OPENGL_LIBRARY}
 	GLFW_303
 	GLEW_190
@@ -51,13 +53,13 @@ add_definitions(
 	-DGLEW_STATIC
 	-D_CRT_SECURE_NO_WARNINGS
 )
-
 FILE(GLOB plantSources plants/*.cpp)
 
 # Tutorial 1
 add_executable(plants 
   ${plantSources}
 )
+
 target_link_libraries(plants
 	${ALL_LIBS}
 )
