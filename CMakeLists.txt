@@ -55,6 +55,7 @@ add_definitions(
 # Tutorial 1
 add_executable(plants 
 	plants/plants.cpp
+  plants/Engine.cpp
 )
 target_link_libraries(plants
 	${ALL_LIBS}
