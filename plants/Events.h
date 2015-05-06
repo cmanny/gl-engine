@@ -4,8 +4,11 @@
 #include <map>
 #include <list>
 
-typedef void (*KeyCallback)(int key, int scancode, int action, int mods);typedef void (*MouseMoveCallback)(double xpos, double ypos);
-typedef void (*MouseButtonCallback)(int button, int action, int mods);
+typedef void (*KeyCallback)(GLFWwindow* w,int key, int scancode, int action, int mods);
+typedef void (*MouseMoveCallback)(GLFWwindow* w, double xpos, double ypos);
+typedef void (*MouseButtonCallback)(GLFWwindow* w, int button, int action, int mods);
+typedef void (*MouseScrollCallback)(GLFWwindow* w, double xoff, double off);
+
 
 #define EVT_MOUSEMOVE 0
 #define EVT_MOUSESCROLL 1
@@ -13,12 +16,14 @@ typedef void (*MouseButtonCallback)(int button, int action, int mods);
 #define EVT_KEY 3
 #define NUM_EVTS 4
 
+using namespace std;
+
 //Wrapper around the glfw input methods
 class Events {
   
 
   private:
-    map<int,list<void*>*> callbacks;
+    map< int,list<void*>* > callbacks ;
     GLFWwindow *window;
     static Events* instance;
     

@@ -50,7 +50,7 @@ void Entity::incX(double i) {
 }
 
 // Increment entity y co-ordinate
-void Entity:incY(double i) {
+void Entity::incY(double i) {
   y += i;
 }
 

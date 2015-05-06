@@ -1,13 +1,13 @@
 #include "MenuState.h"
 
-MenuState::update(double delta){
+void MenuState::update(double delta){
 
 }
 
-MenuState::render(){
+void MenuState::render(){
 
 }
 
-MenuState::dispose(){
+void MenuState::dispose(){
 
 }

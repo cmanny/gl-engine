@@ -31,6 +31,6 @@ class Entity {
     void setWidth(int width);
     void setHeight(int height);
     void incPos(double x, double y);
-}
+};
 
 #endif
