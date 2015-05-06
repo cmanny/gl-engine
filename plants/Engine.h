@@ -23,7 +23,6 @@ class Engine {
     Engine(int _width, int _height, int _frameRate, string _title);
     void start();
     virtual void update(double delta) = 0;
-    virtual void render() = 0;
 };
 
 #endif
