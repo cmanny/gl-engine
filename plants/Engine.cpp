@@ -56,7 +56,10 @@ void Engine::start() {
 
     // Ensure capture of escape key
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    
+  
+    // Define start time
+    double lastTime = glfwGetTime();
+
     // Main game loop
     do {
        
@@ -70,7 +73,8 @@ void Engine::start() {
        glBindVertexArray(VertexArrayID);
 
        // Calculate delta
-       double delta = 1.0; // TEMP****
+       double currentTime = glfwGetTime();
+       double delta = currentTime - lastTime;
 
        // Invoke sub-class functions
        update(delta);
