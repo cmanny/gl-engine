@@ -6,27 +6,16 @@
 #include <glfw3.h>
 #include <glm/glm.hpp>
 
+#include "Engine.h"
 
 using namespace glm;
 using namespace std;
 
-class Engine {
-  
-  private:
-    GLFWwindow* window;
-    int width, height, frameRate;
-    string title;
-    bool running;
-
-  public:
-    Engine(int _width, int _height, string _title);
-    void start();
-};
-
 // Game engine constructor
-Engine::Engine(int _width, int _height, string _title) {
+Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   width = _width;
   height = _height;
+  frameRate = _frameRate;
   title = _title;
 }
 
@@ -75,7 +64,17 @@ void Engine::start() {
       if(!running)
         break;
 
-      // Render...
+       // Setup VAO(Vertex Array Object)
+       GLuint VertexArrayID;
+       glGenVertexArrays(1, &VertexArrayID);
+       glBindVertexArray(VertexArrayID);
+
+       // Calculate delta
+       double delta = 1.0; // TEMP****
+
+       // Invoke sub-class functions
+       update(delta);
+       render();
 
        // Swap buffers
        glfwSwapBuffers(window);
@@ -87,3 +86,13 @@ void Engine::start() {
                             glfwWindowShouldClose(window) == 0 );
   }
 }
+
+
+
+
+
+
+
+
+
+
