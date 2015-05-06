@@ -12,7 +12,6 @@ class StateEngine: public Engine {
       StateEngine(GameState* state, int width, int height, int frameRate, string title) ;
       void setState(GameState* state);
       void update(double);
-      void render();
 };
 
 #endif

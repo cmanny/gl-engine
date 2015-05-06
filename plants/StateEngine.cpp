@@ -19,7 +19,3 @@ void StateEngine::update(double delta) {
 }
 
 // Override render method
-void StateEngine::render() {
-  if(state != NULL)
-    state->render();
-}
