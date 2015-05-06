@@ -58,7 +58,7 @@ void Engine::start() {
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
   
     // Define start time
-    double startTime = glfwGetTime();
+    double lastTime = glfwGetTime();
 
     // Main game loop
     do {
@@ -74,7 +74,7 @@ void Engine::start() {
 
        // Calculate delta
        double currentTime = glfwGetTime();
-       double delta = float(currentTime - lastTime);
+       double delta = currentTime - lastTime;
 
        // Invoke sub-class functions
        update(delta);

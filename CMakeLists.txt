@@ -52,10 +52,11 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
+FILE(GLOB plantSources plants/*.cpp)
+
 # Tutorial 1
 add_executable(plants 
-	plants/plants.cpp
-  plants/Engine.cpp
+  ${plantSources}
 )
 target_link_libraries(plants
 	${ALL_LIBS}
