@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 
 #include "Engine.h"
+#include "AnimatedEntity.h"
 
 using namespace glm;
 using namespace std;

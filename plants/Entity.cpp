@@ -109,3 +109,6 @@ double Entity::getDist(Entity entity) {
 
   return distance;
 }
+
+// Default implementation for update
+void Entity::update(double delta) {}

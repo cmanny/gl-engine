@@ -10,7 +10,8 @@ class Entity {
     Entity(double x, double y, int width, int height);
 
     double getDist(Entity entity);
-    
+    virtual void update(double delta);
+
     // Accessor methods
     double getX();
     double getY();
