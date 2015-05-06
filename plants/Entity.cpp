@@ -2,12 +2,12 @@
 #include <math.h>
 
 // Constructor
-Entity::Entity(int x, int y) {
+Entity::Entity(double x, double y) {
   this->x = x;
   this->y = y;
 }
 
-Entity::Entity(int x, int y, int width, int height) {
+Entity::Entity(double x, double y, int width, int height) {
   this->x = x;
   this->y = y;
   this->width = width;
@@ -35,13 +35,13 @@ int Entity::getHeight() {
 }
 
 // Set entity x co-ordinate
-void Entity::setX(double x) {
-  this->x = x;
+void Entity::setX(double _x) {
+  this->x = _x;
 }
 
 // Set entity y co-ordinate
-void Entity::setY(double y) {
-  this->y = y;
+void Entity::setY(double _y) {
+  this->y = _y;
 }
 
 // Increment entity x co-ordinate
@@ -109,28 +109,3 @@ double Entity::getDist(Entity entity) {
 
   return distance;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

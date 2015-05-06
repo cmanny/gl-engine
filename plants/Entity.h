@@ -6,8 +6,8 @@ class Entity {
   int width, height;
 
   public:
-    Entity(int x, int y);
-    Entity(int x, int y, int width, int height);
+    Entity(double x, double y);
+    Entity(double x, double y, int width, int height);
 
     double getDist(Entity entity);
     
