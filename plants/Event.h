@@ -3,7 +3,7 @@
 #include <list>
 
 typedef struct Event {
-  double data[4];
+  int data[4];
 } Event;
 
 #endif

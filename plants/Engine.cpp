@@ -5,9 +5,12 @@
 #include <GL/glew.h>
 #include <glfw3.h>
 #include <glm/glm.hpp>
+#include <iostream>
 
 #include "Engine.h"
 #include "AnimatedEntity.h"
+
+
 
 using namespace glm;
 using namespace std;
@@ -20,15 +23,27 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   title = _title;
 }
 
+void Engine::callback(Event evt){
+  cout << "Engine key callback, evt pointer = " << (void*)&evt << ", data[0] =  " << evt.data[0] << "\n";
+  if(evt.data[0] == GLFW_KEY_ESCAPE){
+    cout << "Setting running to false" << "\n"; 
+  }
+} 
+
+
 // Start game engine
 void Engine::start() {
+  cout << "Starting Engine.\n";
   running = true; 
 
   // Initialise GLFW
   if(!glfwInit()) {
-    fprintf(stderr, "Error initializing GLFW.\n");
+    cerr << "Error initializing GLFW.\n";
     exit(-1);
   }
+
+  
+  
 
   // Set OpenGL Window hints
   glfwWindowHint(GLFW_SAMPLES, 4);
@@ -41,10 +56,11 @@ void Engine::start() {
   // Open a window and create its OpenGL context 
   window = glfwCreateWindow( width, height, title.c_str(), NULL, NULL);
   if( window == NULL ){
-      fprintf(stderr, "Error creating GLFW window.\n");
+      cerr << "Error creating GLFW window.\n";
       glfwTerminate();
       exit(-1);
   }
+  
   
   // Initialise GLEW
   glfwMakeContextCurrent(window); 
@@ -59,15 +75,12 @@ void Engine::start() {
 
   // Define start time
   double lastTime = glfwGetTime();
+  EventManager evtmgr(window);
+  evtmgr.enableCallback(EVT_KEY, (EvtCallback) &Engine::callback);
 
   // Main game loop
   do {
      
-     // Setup VAO(Vertex Array Object)
-     GLuint VertexArrayID;
-     glGenVertexArrays(1, &VertexArrayID);
-     glBindVertexArray(VertexArrayID);
-
      // Calculate delta
      double currentTime = glfwGetTime();
      double delta = currentTime - lastTime;
@@ -76,12 +89,13 @@ void Engine::start() {
      update(delta);
 
      glfwSwapBuffers(window);
-     glfwPollEvents();
+     glfwWaitEvents(); 
+     cout << "Running:" << running;
+    // glfwPollEvents();
   } 
   
   // Check if the ESC key was pressed or the window was closed
-  while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-                          glfwWindowShouldClose(window) == 0 );
+  while(running);
 }
 
 

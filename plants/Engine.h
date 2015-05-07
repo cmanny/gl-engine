@@ -8,6 +8,7 @@
 #include <glfw3.h>
 #include <glm/glm.hpp>
 
+#include "EventManager.h"
 using namespace glm;
 using namespace std;
 
@@ -18,6 +19,8 @@ class Engine {
     int width, height, frameRate;
     string title;
     bool running;
+
+    static void callback(Event evt);
 
   public:
     Engine(int _width, int _height, int _frameRate, string _title);

@@ -3,11 +3,12 @@
 #include <glfw3.h>
 #include <map>
 #include <list>
+#include <iostream>
 
 #include "Event.h"
 
 
-typedef void (*EvtCallback)(Event*);
+typedef void (*EvtCallback)(Event);
 
 #define EVT_MOUSEMOVE 0
 #define EVT_MOUSESCROLL 1
