@@ -7,7 +7,6 @@ class MenuState : public GameState {
 
   public:
     void update(double delta);
-    void render();
     void dispose();
 };
 
