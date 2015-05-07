@@ -26,7 +26,8 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
 void Engine::callback(Event evt){
   cout << "Engine key callback, evt pointer = " << (void*)&evt << ", data[0] =  " << evt.data[0] << "\n";
   if(evt.data[0] == GLFW_KEY_ESCAPE){
-    cout << "Setting running to false" << "\n"; 
+    cout << "Setting running to false" << "\n";
+    this->running = false; 
   }
 } 
 
@@ -76,7 +77,7 @@ void Engine::start() {
   // Define start time
   double lastTime = glfwGetTime();
   EventManager evtmgr(window);
-  evtmgr.enableCallback(EVT_KEY, (EvtCallback) &Engine::callback);
+  evtmgr.enableCallback(makeCallback( (void*) this, EVT_KEY, (EvtCallback) &Engine::callback));
 
   // Main game loop
   do {

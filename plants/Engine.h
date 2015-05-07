@@ -20,7 +20,7 @@ class Engine {
     string title;
     bool running;
 
-    static void callback(Event evt);
+    void callback(Event evt);
 
   public:
     Engine(int _width, int _height, int _frameRate, string _title);

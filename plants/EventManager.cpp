@@ -8,7 +8,6 @@ EventManager* EventManager::instance = 0;
 EventManager::EventManager(GLFWwindow* w) {
   window = w;
   instance = this;
-  cout << "address of keyCallback " << (void*)EventManager::keyCallback << "\n";
   glfwSetKeyCallback(w, EventManager::keyCallback);
   glfwSetScrollCallback(w, &EventManager::mouseScrollCallback);
   glfwSetMouseButtonCallback(w, &EventManager::mouseButtonCallback);
@@ -16,7 +15,7 @@ EventManager::EventManager(GLFWwindow* w) {
 
   for(int i = 0; i < NUM_EVTS; i++)
     callbacks.insert(
-        std::pair< int,list<EvtCallback>* >(i,new list<EvtCallback>)
+        std::pair< int,list<Callback*>* >(i,new list<Callback*>)
         );
 }
 
@@ -26,45 +25,42 @@ EventManager* EventManager::getInstance(){
   return instance;
 }
 
-int EventManager::enableCallback(int type, EvtCallback callback){
-  if(callbacks.count(type) > 0){
-    callbacks[type]->push_back(callback);
-    cout << "Pushed callback " << type << " at address " << (void*)callback << "\n";
+int EventManager::enableCallback(Callback* c){
+  if(callbacks.count(c->type) > 0){
+    callbacks[c->type]->push_back(c);
   }
 }
 
-int EventManager::disableCallback(int type, EvtCallback callback){
-  if(callbacks.count(type) > 0){
-    list<EvtCallback>* v = callbacks[type];
-    v->remove(callback);
+int EventManager::disableCallback(Callback* c){
+  if(callbacks.count(c->type) > 0){
+    list<Callback*>* v = callbacks[c->type];
+    v->remove(c);
   }
 }
 void EventManager::keyCallback(GLFWwindow* w,int key,int scancode,int action,int mods){
   cout << "Key callbacks" << "\n";
   for(auto it = instance->callbacks[EVT_KEY]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
-    Event evt;
-    evt.data[0] = key;
-    evt.data[1] = scancode;
-    cout << "Looping key callback, evt ptr " << (void*)&evt << " with key" << key << "\n";
-    (*it)(evt);
+    Event evt = {key,scancode,action,mods};
+    //Dat cast
+    ( (MemberEvtCallback)((void*)((*it)->evt)) )((*it)->object, evt);
   } 
 }
 void EventManager::mouseMoveCallback(GLFWwindow* w,double xpos,double ypos){
   for(auto it = instance->callbacks[EVT_MOUSEMOVE]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
     Event evt = {xpos,ypos,0,0};
-    (*it)(evt);
+    //(*it)(evt);
   }
 }
 void EventManager::mouseButtonCallback(GLFWwindow* w,int button,int action,int mods){
   for(auto it = instance->callbacks[EVT_MOUSEBUTTON]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
     Event evt = {button,action,mods,0};
-    (*it)(evt);
+    //(*it)(evt);
   }
 }
 void EventManager::mouseScrollCallback(GLFWwindow* w,double xoff,double yoff){
   for(auto it = instance->callbacks[EVT_MOUSESCROLL]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
     Event evt = {xoff, yoff, 0,0};
-    (*it)(evt);
+    //(*it)(evt);
   }
 }
 

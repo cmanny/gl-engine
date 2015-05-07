@@ -8,7 +8,6 @@
 #include "Event.h"
 
 
-typedef void (*EvtCallback)(Event);
 
 #define EVT_MOUSEMOVE 0
 #define EVT_MOUSESCROLL 1
@@ -23,7 +22,7 @@ class EventManager {
   
 
   private:
-    map< int,list<EvtCallback>* > callbacks ;
+    map< int,list<Callback*>* > callbacks ;
     GLFWwindow *window;
     static EventManager* instance;
     
@@ -39,8 +38,8 @@ class EventManager {
     EventManager(GLFWwindow* w);
     static EventManager* getInstance();
 
-    int enableCallback(int, EvtCallback);
-    int disableCallback(int, EvtCallback); 
+    int enableCallback(Callback*);
+    int disableCallback(Callback*); 
 
 };
 
