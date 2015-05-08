@@ -42,7 +42,7 @@ void EventManager::keyCallback(GLFWwindow* w,int key,int scancode,int action,int
   for(auto it = instance->callbacks[EVT_KEY]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
     Event evt = {key,scancode,action,mods};
     //Dat cast
-    ( (MemberEvtCallback)((void*)((*it)->evt)) )((*it)->object, evt);
+    ( (MemberEvtCallback)(((*it)->evt)) ) ((*it)->object, evt);
   } 
 }
 void EventManager::mouseMoveCallback(GLFWwindow* w,double xpos,double ypos){

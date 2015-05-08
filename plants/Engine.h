@@ -16,9 +16,9 @@ class Engine {
   
   private:
     GLFWwindow* window;
-    int width, height, frameRate;
+    int width, height, frameRate, desktopWidth, desktopHeight;
     string title;
-    bool running;
+    bool running, fullscreen;
 
     void callback(Event evt);
 

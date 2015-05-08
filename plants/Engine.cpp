@@ -21,14 +21,20 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   height = _height;
   frameRate = _frameRate;
   title = _title;
+  fullscreen = false;
 }
 
 void Engine::callback(Event evt){
-  cout << "Engine key callback, evt pointer = " << (void*)&evt << ", data[0] =  " << evt.data[0] << "\n";
-  if(evt.data[0] == GLFW_KEY_ESCAPE){
-    cout << "Setting running to false" << "\n";
-    this->running = false; 
+  if(evt.data[0] == GLFW_KEY_F11){
+    int w = !fullscreen ? desktopWidth : width;
+    int h = !fullscreen ? desktopHeight : height;
+    fullscreen = !fullscreen;
+    glfwSetWindowSize(window,w, h);
+    glfwSetWindowPos(window,0, 0); 
+  }else if(evt.data[0] == GLFW_KEY_ESCAPE){
+    this->running = false;
   }
+
 } 
 
 
@@ -70,14 +76,17 @@ void Engine::start() {
     fprintf(stderr, "Error initializing GLEW.\n");
     exit(-1);
   }
-
-  // Ensure capture of escape key
+  
+  const GLFWvidmode* desktopMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+  desktopHeight = desktopMode->height;
+  desktopWidth = desktopMode->width;
+    // Ensure capture of escape key
   glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
   // Define start time
   double lastTime = glfwGetTime();
   EventManager evtmgr(window);
-  evtmgr.enableCallback(makeCallback( (void*) this, EVT_KEY, (EvtCallback) &Engine::callback));
+  evtmgr.enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
 
   // Main game loop
   do {
