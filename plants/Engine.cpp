@@ -8,8 +8,7 @@
 #include <iostream>
 
 #include "Engine.h"
-#include "AnimatedEntity.h"
-
+#include "Renderer.h"
 
 
 using namespace glm;
@@ -22,6 +21,9 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   frameRate = _frameRate;
   title = _title;
   fullscreen = false;
+
+  // Instantiate renderer instance
+  Renderer::init(width, height);
 }
 
 void Engine::callback(Event evt){
@@ -29,6 +31,7 @@ void Engine::callback(Event evt){
     int w = !fullscreen ? desktopWidth : width;
     int h = !fullscreen ? desktopHeight : height;
     fullscreen = !fullscreen;
+
     glfwSetWindowSize(window,w, h);
     glfwSetWindowPos(window,0, 0); 
   }else if(evt.data[0] == GLFW_KEY_ESCAPE){
@@ -107,13 +110,4 @@ void Engine::start() {
   // Check if the ESC key was pressed or the window was closed
   while(running);
 }
-
-
-
-
-
-
-
-
-
 

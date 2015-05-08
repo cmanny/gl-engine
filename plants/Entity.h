@@ -1,37 +1,28 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <GL/glew.h>
+#include <glfw3.h>
+#include <glm/glm.hpp>
+#include <vector>
+
 class Entity {
-  double x, y;
-  int width, height;
+  std::vector<GLfloat*> *vertexData;
+  GLuint* vertexBuffer;
 
   public:
-    Entity(double x, double y);
-    Entity(double x, double y, int width, int height);
-
-    double getDist(Entity entity);
-    virtual void update(double delta);
+    Entity(std::vector<GLfloat*> *vertexData);
+    virtual void update(double delta)=0;
 
     // Accessor methods
-    double getX();
-    double getY();
-    double getCentreX();
-    double getCentreY();
-
-    int getWidth();
-    int getHeight();
+    std::vector<GLfloat*>* getVertexData();
+    GLuint* getVertexBuffer();
 
     // Mutator methods
-    void setX(double _x);
-    void setY(double _y);
-    void incX(double i);
-    void incY(double i);
-    void setPos(double x, double y);
-    void setBounds(double x, double y, int width, int height);
-
-    void setWidth(int width);
-    void setHeight(int height);
-    void incPos(double x, double y);
+    void setVertexData(std::vector<GLfloat*>* vertexData);
 };
 
 #endif

@@ -9,6 +9,8 @@
 #include <glm/glm.hpp>
 
 #include "EventManager.h"
+#include "Renderer.h"
+
 using namespace glm;
 using namespace std;
 

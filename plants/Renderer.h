@@ -17,11 +17,14 @@ class Renderer {
   private:
     vector<Entity*>* entities;
     int screenW, screenH;
+    GLuint VertexArrayID;
+    static Renderer instance;
 
   public:
     Renderer(int,int);
     void setEntities(vector<Entity*>* entities);
-    void draw();
-    
+    void draw(); 
+    static Renderer* getInstance();
+    static void init(int width, int height);
 };
 #endif

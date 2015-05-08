@@ -1,9 +1,20 @@
+#include <vector>
+
 #include "RunningState.h"
 #include "Scene.h"
+#include "TestEntity.h"
+#include "Entity.h"
+#include "Renderer.h"
 
 // Constructor
 RunningState::RunningState() {
-  // TODO: Set start scene
+  
+  // TEST --------------------
+  TestEntity* entity = new TestEntity();
+  std::vector<Entity*>* entities = new std::vector<Entity*>();
+  entities->push_back(entity);
+  Renderer::getInstance()->setEntities(entities);
+  // -------------------------
 }
 
 // Update game
