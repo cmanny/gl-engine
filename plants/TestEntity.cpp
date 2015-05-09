@@ -10,14 +10,13 @@
 
 // Constructor
 TestEntity::TestEntity(){
-    GLfloat* jim = new GLfloat[9];
+    vertexData = new GLfloat[9];
     GLfloat jimData[] = {
     -1.0f, -1.0f, 0.0f,
      1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
     };
-    std::copy(jimData,jimData+9,jim);
-    vertexData = jim;
+    std::copy(jimData,jimData+9,vertexData);
     refreshBuffer();
  
   // Do nothing. Just a test, so chill...

@@ -13,14 +13,14 @@ Renderer::Renderer(int scrW, int scrH){
   programID = LoadShaders( "shaders/SimpleTransform.vertexshader", "shaders/SingleColour.fragmentshader" );
   GLuint mvpMatID = glGetUniformLocation(programID, "MVP");
 
-  glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-  glm::mat4 view = glm::lookAt(
+  projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+  view = glm::lookAt(
     glm::vec3(4,3,3), 
     glm::vec3(0,0,0), 
     glm::vec3(0,1,0)
     );
-  glm::mat4 model = glm::mat4(1.0f);
-  glm::mat4 mvp = projection*view*model;
+  model = glm::mat4(1.0f);
+  mvp = projection*view*model;
 }
 
 // Set entity render list

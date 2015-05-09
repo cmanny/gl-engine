@@ -6,14 +6,12 @@
 #include <string>
 #include <GL/glew.h>
 #include <glfw3.h>
-#include <glm/glm.hpp>
 #include "Entity.h"
 #include <vector>
 #include <iostream>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
 #include <common/shader.hpp>
 
 using namespace std;
@@ -24,7 +22,8 @@ class Renderer {
     int screenW, screenH;
     GLuint VertexArrayID, 
            programID, 
-           mvpMatID;
+           mvpMatID,
+           vertexbuffer;
     glm::mat4 projection,
               view,
               model,
