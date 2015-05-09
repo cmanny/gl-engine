@@ -3,14 +3,20 @@
 
 #include "GameState.h"
 #include "Scene.h"
+#include "Renderer.h"
+#include "EventManager.h"
 
 class Scene;
 
 class RunningState : public GameState {
-  Scene* scene = 0;
+  private:
+    Scene* scene = 0;
+    EventManager* evtmgr = 0;
+    Renderer* renderer = 0;
 
   public:
-    RunningState();
+    RunningState(EventManager*, Renderer*);
+    void init();
     void update(double delta);
     void dispose();
 };

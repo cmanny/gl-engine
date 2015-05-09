@@ -1,9 +1,6 @@
 #include "EventManager.h"
+
 EventManager* EventManager::instance = 0;
-
-
-#pragma warning( push )
-#pragma warning( disable : 4101)
 
 EventManager::EventManager(GLFWwindow* w) {
   window = w;
@@ -17,12 +14,6 @@ EventManager::EventManager(GLFWwindow* w) {
     callbacks.insert(
         std::pair< int,list<Callback*>* >(i,new list<Callback*>)
         );
-}
-
-#pragma warning( pop ) 
-
-EventManager* EventManager::getInstance(){
-  return instance;
 }
 
 int EventManager::enableCallback(Callback* c){

@@ -62,9 +62,11 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
 
     // Ensure capture of escape key
   glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+  
+  // Additional setup of other components
+  evtmgr = new EventManager(window);
+  renderer = new Renderer(width, height);
 
-  // Initialize renderer
-  Renderer::init(width, height);
 }
 
 void Engine::callback(Event evt){
@@ -85,10 +87,8 @@ void Engine::callback(Event evt){
 // Start game engine
 void Engine::start() {
   // Define start time
-  double lastTime = glfwGetTime();
-  EventManager evtmgr(window);
-  evtmgr.enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
-
+  double lastTime = glfwGetTime(); 
+  evtmgr->enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
   // Main game loop
    do {
      
@@ -98,7 +98,7 @@ void Engine::start() {
 
      // Invoke sub-class functions
      update(delta);
-     Renderer::getInstance()->draw(); 
+     renderer->draw(); 
 
      glfwSwapBuffers(window);
      //glfwWaitEvents(); 

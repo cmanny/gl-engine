@@ -24,8 +24,7 @@ class EventManager {
   private:
     map< int,list<Callback*>* > callbacks ;
     GLFWwindow *window;
-    static EventManager* instance;
-    
+    static EventManager* instance;    
     // The default callbacks for the GLFW function calls
     // They need to be static to use them as callbacks
     
@@ -36,7 +35,6 @@ class EventManager {
 
   public:
     EventManager(GLFWwindow* w);
-    static EventManager* getInstance();
 
     int enableCallback(Callback*);
     int disableCallback(Callback*); 

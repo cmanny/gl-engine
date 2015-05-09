@@ -15,9 +15,14 @@ using namespace glm;
 using namespace std;
 
 class Engine {
-  
+  protected:
+    EventManager* evtmgr;
+    Renderer* renderer;
+
+
   private:
     GLFWwindow* window;
+    
     int width, height, frameRate, desktopWidth, desktopHeight;
     string title;
     bool running, fullscreen;

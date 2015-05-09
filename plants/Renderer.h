@@ -21,13 +21,10 @@ class Renderer {
     vector<Entity*>* entities;
     int screenW, screenH;
     GLuint VertexArrayID, programID, vertexbuffer;
-    static Renderer* instance;
 
   public:
     Renderer(int,int);
     void setEntities(vector<Entity*>* entities);
     void draw(); 
-    static Renderer* getInstance();
-    static void init(int width, int height);
 };
 #endif

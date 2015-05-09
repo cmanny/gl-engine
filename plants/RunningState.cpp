@@ -7,14 +7,16 @@
 #include "Renderer.h"
 
 // Constructor
-RunningState::RunningState() {
-  
-  // TEST --------------------
+RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
+  this->evtmgr = evtmgr;
+  this->renderer = renderer;
+}
+
+void RunningState::init(){
   TestEntity* entity = new TestEntity();
   std::vector<Entity*>* entities = new std::vector<Entity*>();
   entities->push_back(entity);
-  Renderer::getInstance()->setEntities(entities);
-  // -------------------------
+  renderer->setEntities(entities);
 }
 
 // Update game

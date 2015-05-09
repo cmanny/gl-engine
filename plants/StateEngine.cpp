@@ -4,7 +4,8 @@
 // Constructor
 StateEngine::StateEngine(int width, int height, int frameRate, string title) : 
   Engine(width, height, frameRate, title) {
-    this->state = new RunningState();
+    this->state = new RunningState(evtmgr, renderer);
+    this->state->init();
 }
 
 // Set game state
