@@ -33,7 +33,7 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   }
 
   // Set OpenGL Window hints
-  glfwWindowHint(GLFW_SAMPLES, 4);
+
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
@@ -65,7 +65,7 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   
   // Additional setup of other components
   evtmgr = new EventManager(window);
-  renderer = new Renderer(width, height);
+  renderer = new Renderer(evtmgr, width, height);
 
 }
 

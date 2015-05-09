@@ -6,13 +6,13 @@
 #include <string>
 #include <GL/glew.h>
 #include <glfw3.h>
-#include "Entity.h"
 #include <vector>
 #include <iostream>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <common/shader.hpp>
+#include "Entity.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -28,9 +28,10 @@ class Renderer {
               view,
               model,
               mvp;
+    Camera* camera;
 
   public:
-    Renderer(int,int);
+    Renderer(EventManager*, int,int);
     void setEntities(vector<Entity*>* entities);
     void draw(); 
 };

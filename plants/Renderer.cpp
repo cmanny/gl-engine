@@ -1,11 +1,14 @@
 #include "Renderer.h"
 
 // Constructor
-Renderer::Renderer(int scrW, int scrH){
+Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   std::cout << "Renderer init\n";
   this->screenW = scrW;
   this->screenH = scrH;
   
+  camera = new Camera(evtmgr);
+  camera->init(0,0,16);
+
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
   glGenVertexArrays(1, &VertexArrayID);
@@ -30,6 +33,7 @@ void Renderer::setEntities(vector<Entity*>* entities){
 // Render entities
 void Renderer::draw(){
   // Clear the screen
+  mvp = projection * camera->view() * model;
   glClear( GL_COLOR_BUFFER_BIT );
   // Use our shader
   glUseProgram(programID);
