@@ -20,7 +20,7 @@ class Renderer {
   private:
     vector<Entity*>* entities;
     int screenW, screenH;
-    GLuint VertexArrayID, programID;
+    GLuint VertexArrayID, programID, vertexbuffer;
     static Renderer* instance;
 
   public:

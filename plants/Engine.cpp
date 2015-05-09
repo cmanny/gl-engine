@@ -85,7 +85,7 @@ void Engine::callback(Event evt){
 // Start game engine
 void Engine::start() {
   // Define start time
-  double lastTime = glfwGetTime();
+  //double lastTime = glfwGetTime();
   EventManager evtmgr(window);
   evtmgr.enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
 
@@ -101,9 +101,8 @@ void Engine::start() {
      Renderer::getInstance()->draw(); 
 
      glfwSwapBuffers(window);
-     glfwWaitEvents(); 
-     cout << "Running:" << running;
-    // glfwPollEvents();
+     //glfwWaitEvents(); 
+     glfwPollEvents();
   } 
   
   // Check if the ESC key was pressed or the window was closed
