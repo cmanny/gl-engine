@@ -16,7 +16,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   programID = LoadShaders( "shaders/SimpleTransform.vertexshader", "shaders/SingleColour.fragmentshader" );
   mvpMatID = glGetUniformLocation(programID, "MVP");
 
-  projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+  projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 100.0f);
   view = glm::lookAt(
     glm::vec3(0,0,16), 
     glm::vec3(0,0,0), 
