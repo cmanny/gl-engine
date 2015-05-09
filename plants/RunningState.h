@@ -7,7 +7,7 @@
 class Scene;
 
 class RunningState : public GameState {
-  Scene* scene;
+  Scene* scene = 0;
 
   public:
     RunningState();

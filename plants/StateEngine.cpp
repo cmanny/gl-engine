@@ -1,9 +1,10 @@
 #include "StateEngine.h"
+#include "RunningState.h"
 
 // Constructor
-StateEngine::StateEngine(GameState* state, int width, int height, int frameRate, string title) : 
+StateEngine::StateEngine(int width, int height, int frameRate, string title) : 
   Engine(width, height, frameRate, title) {
-  this->state = state;
+    this->state = new RunningState();
 }
 
 // Set game state

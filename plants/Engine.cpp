@@ -22,27 +22,7 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   title = _title;
   fullscreen = false;
 
-  // Instantiate renderer instance
-  Renderer::init(width, height);
-}
-
-void Engine::callback(Event evt){
-  if(evt.data[0] == GLFW_KEY_F11){
-    int w = !fullscreen ? desktopWidth : width;
-    int h = !fullscreen ? desktopHeight : height;
-    fullscreen = !fullscreen;
-
-    glfwSetWindowSize(window,w, h);
-    glfwSetWindowPos(window,0, 0); 
-  }else if(evt.data[0] == GLFW_KEY_ESCAPE){
-    this->running = false;
-  }
-
-} 
-
-
-// Start game engine
-void Engine::start() {
+  // Instantiate renderer instanc
   cout << "Starting Engine.\n";
   running = true; 
 
@@ -52,16 +32,12 @@ void Engine::start() {
     exit(-1);
   }
 
-  
-  
-
   // Set OpenGL Window hints
   glfwWindowHint(GLFW_SAMPLES, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
-
 
   // Open a window and create its OpenGL context 
   window = glfwCreateWindow( width, height, title.c_str(), NULL, NULL);
@@ -83,16 +59,38 @@ void Engine::start() {
   const GLFWvidmode* desktopMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
   desktopHeight = desktopMode->height;
   desktopWidth = desktopMode->width;
+
     // Ensure capture of escape key
   glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
+  // Initialize renderer
+  Renderer::init(width, height);
+}
+
+void Engine::callback(Event evt){
+  if(evt.data[0] == GLFW_KEY_F11){
+    int w = !fullscreen ? desktopWidth : width;
+    int h = !fullscreen ? desktopHeight : height;
+    fullscreen = !fullscreen;
+
+    glfwSetWindowSize(window,w, h);
+    glfwSetWindowPos(window,0, 0); 
+  }else if(evt.data[0] == GLFW_KEY_ESCAPE){
+    this->running = false;
+  }
+
+} 
+
+
+// Start game engine
+void Engine::start() {
   // Define start time
   double lastTime = glfwGetTime();
   EventManager evtmgr(window);
   evtmgr.enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
 
   // Main game loop
-  do {
+   do {
      
      // Calculate delta
      double currentTime = glfwGetTime();
@@ -100,6 +98,7 @@ void Engine::start() {
 
      // Invoke sub-class functions
      update(delta);
+     Renderer::getInstance()->draw(); 
 
      glfwSwapBuffers(window);
      glfwWaitEvents(); 

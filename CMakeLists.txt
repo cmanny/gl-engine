@@ -58,6 +58,10 @@ FILE(GLOB plantSources plants/*.cpp)
 # Tutorial 1
 add_executable(plants 
   ${plantSources}
+  common/shader.cpp
+  common/shader.hpp
+  plants/shaders/SimpleFragmentShader.fragmentshader
+  plants/shaders/SimpleVertexShader.vertexshader
 )
 
 target_link_libraries(plants

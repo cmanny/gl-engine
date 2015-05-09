@@ -10,19 +10,21 @@
 #include <vector>
 
 class Entity {
-  std::vector<GLfloat*> *vertexData;
-  GLuint* vertexBuffer;
+  protected:
+    GLfloat* vertexData;
+    void refreshBuffer();
+  private:
+    GLuint* vertexBuffer;
 
   public:
-    Entity(std::vector<GLfloat*> *vertexData);
+    Entity();
     virtual void update(double delta)=0;
 
     // Accessor methods
-    std::vector<GLfloat*>* getVertexData();
+    GLfloat* getVertexData();
     GLuint* getVertexBuffer();
 
     // Mutator methods
-    void setVertexData(std::vector<GLfloat*>* vertexData);
 };
 
 #endif

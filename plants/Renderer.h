@@ -9,16 +9,19 @@
 #include <glm/glm.hpp>
 #include "Entity.h"
 #include <vector>
+#include <iostream>
 
 using namespace glm;
+
+#include <common/shader.hpp>
 using namespace std;
 
 class Renderer {
   private:
     vector<Entity*>* entities;
     int screenW, screenH;
-    GLuint VertexArrayID;
-    static Renderer instance;
+    GLuint VertexArrayID, programID;
+    static Renderer* instance;
 
   public:
     Renderer(int,int);

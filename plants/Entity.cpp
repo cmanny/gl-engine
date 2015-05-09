@@ -8,25 +8,25 @@
 #include <vector>
 
 // Constructor
-Entity::Entity(std::vector<GLfloat*> *vertexData) {
-  setVertexData(vertexData);
+Entity::Entity() {
+  vertexData = new GLfloat;
+  vertexBuffer = new GLuint;
 }
 
 // Get vertex data
-std::vector<GLfloat*>* Entity::getVertexData() {
+GLfloat* Entity::getVertexData() {
   return vertexData;
 }
 
 // Set vertex data
-void Entity::setVertexData(std::vector<GLfloat*>* vertexData) {
-  this->vertexData = vertexData;
-  
+void Entity::refreshBuffer() {
   // Generate & bind vertex buffer
   glGenBuffers(1, vertexBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
       
   // Pass updated vertices to OpenGL.
-  glBufferData(GL_ARRAY_BUFFER, sizeof(*vertexBuffer), vertexBuffer, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
 }
 
 // Get vertex buffer
