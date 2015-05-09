@@ -26,5 +26,22 @@ void Camera::scrollCallback(Event evt){
 }
 
 void Camera::keyCallback(Event evt){
-  //
+  int key = evt.data[0];
+  int scancode = evt.data[1];
+  int action = evt.data[2];
+  int mods = evt.data[3];
+  
+  switch(action){
+    case GLFW_REPEAT:
+    case GLFW_PRESS:
+      switch(key){
+        case GLFW_KEY_A: centreX -= 0.2; break;
+        case GLFW_KEY_D: centreX += 0.2; break;
+        case GLFW_KEY_W: centreY += 0.2; break;
+        case GLFW_KEY_S: centreY -= 0.2; break;
+      }
+    break;
+    case GLFW_RELEASE: break;
+  }
+       
 }

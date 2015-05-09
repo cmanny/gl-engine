@@ -4,10 +4,11 @@
 #include <glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 class Camera {
   private:
-    int eyeX, eyeY, eyeZ,
+    double eyeX, eyeY, eyeZ,
         centreX, centreY, centreZ;
     
     EventManager* evtmgr;
