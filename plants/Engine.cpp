@@ -85,7 +85,7 @@ void Engine::callback(Event evt){
 // Start game engine
 void Engine::start() {
   // Define start time
-  //double lastTime = glfwGetTime();
+  double lastTime = glfwGetTime();
   EventManager evtmgr(window);
   evtmgr.enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Engine::callback));
 

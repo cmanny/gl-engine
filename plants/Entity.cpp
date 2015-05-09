@@ -25,7 +25,7 @@ void Entity::refreshBuffer() {
   glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
       
   // Pass updated vertices to OpenGL.
-  glBufferData(GL_ARRAY_BUFFER, sizeof(GLuint)*9, vertexData, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*9, vertexData, GL_STATIC_DRAW);
 
 }
 
