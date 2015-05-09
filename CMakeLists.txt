@@ -62,6 +62,8 @@ add_executable(plants
   common/shader.hpp
   plants/shaders/SimpleFragmentShader.fragmentshader
   plants/shaders/SimpleVertexShader.vertexshader
+  plants/shaders/SimpleTransform.vertexshader
+  plants/shaders/SingleColour.fragmentshader
 )
 
 target_link_libraries(plants
