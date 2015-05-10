@@ -7,8 +7,8 @@ int main() {
  
   // Instantiate game instance
   StateEngine* engine = new StateEngine( 
-      640, 
-      480, 
+      1000, 
+      800, 
       60, 
       string("Plants"));
   engine->start();
