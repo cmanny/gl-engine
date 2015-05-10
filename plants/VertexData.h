@@ -4,9 +4,14 @@ class VertexData {
   private:
     GLfloat* vertexData;
     GLuint* vertexBuffer;
+
   public:
     VertexData();
     ~VertexData();
-    GLfloat* vertexData();
-    GLuint* vertexBuffer();
+
+    GLfloat* getVertexData();
+    GLuint* getVertexBuffer();
+
+    void setVertexData(GLfloat* vertexData);
+    void refreshBuffer();
 };
