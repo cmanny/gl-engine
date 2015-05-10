@@ -11,13 +11,14 @@
 
 class Entity {
   protected:
-    GLfloat* vertexData;
+    GLfloat* vertexData = 0;
     void refreshBuffer();
   private:
-    GLuint* vertexBuffer;
+    GLuint* vertexBuffer = 0;
 
   public:
     Entity();
+    //~Entity();
     virtual void update(double delta)=0;
 
     // Accessor methods
