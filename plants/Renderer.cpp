@@ -1,5 +1,4 @@
 #include "Renderer.h"
-
 // Constructor
 Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   std::cout << "Renderer init\n";

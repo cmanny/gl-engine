@@ -6,34 +6,36 @@ typedef struct Event {
   int data[4];
 } Event;
 
-typedef void (*EvtCallback)(Event);
-typedef void (*MemberEvtCallback)(void*, Event);
-
-class CallbackBase {
-  protected:
-    virtual void callback() = 0;
-};
-
-template<class T>
-class CallbackTmpl : public virtual CallbackBase {
-  private:
-    int type;
-  public:
-    CallbackTmpl(int, void (T::*)(Event));
-    void callback(Event);
-};
-
-
 template <typename T>
 using EventCallback = void (T::*)(Event p);
 
-typedef struct Callback {
-  void* object;
-  int type;
-  EvtCallback evt;
-} Callback;
+class CallbackBase {
+  public:
+    virtual void callback(Event) = 0;
+    virtual int getType() = 0;
+};
 
-Callback* makeCallback(void* object, int type, EvtCallback evt);
+template<class T>
+class Callback : public virtual CallbackBase {
+  private:
+    int type;
+    T* object;
+    EventCallback<T> evtCallback;
+    
+  public:
+    Callback(T* t, int type, EventCallback<T>  callback){
+      this->object = t;
+      this->type = type;
+      this->evtCallback = callback;
+    }
+    void callback(Event evt){
+      (object->*evtCallback)(evt);
+
+    }
+    int getType(){
+      return type;
+    }
+};
 
 #endif
 

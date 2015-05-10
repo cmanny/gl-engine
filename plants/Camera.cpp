@@ -8,8 +8,8 @@ Camera::Camera(EventManager* evtmgr){
 
 // Initialise camera
 void Camera::init(int x, int y, int z){
-  evtmgr->enableCallback(makeCallback(this, EVT_MOUSESCROLL, (EvtCallback) &Camera::scrollCallback));
-  evtmgr->enableCallback(makeCallback(this, EVT_KEY, (EvtCallback) &Camera::keyCallback));
+  evtmgr->enableCallback(new Callback<Camera>(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
+  evtmgr->enableCallback(new Callback<Camera>(this, EVT_KEY, &Camera::keyCallback));
   eyeX = x;
   eyeY = y;
   eyeZ = z;
