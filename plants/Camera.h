@@ -9,8 +9,10 @@
 class Camera {
   private:
     double eyeX, eyeY, eyeZ,
-        centreX, centreY, centreZ;
+        centreX, centreY, centreZ,
+        moveVelX, moveVelY, moveVelZ;
     
+    bool moveNorth, moveEast, moveSouth, moveWest;    
     EventManager* evtmgr;
     
     void scrollCallback(Event);
@@ -19,8 +21,8 @@ class Camera {
   public:
     Camera(EventManager* evtmgr);
     void init(int,int,int);
+    void update(double delta);
     glm::mat4 view();
-    
 };
 
 #endif
