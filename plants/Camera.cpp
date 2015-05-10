@@ -60,10 +60,10 @@ void Camera::keyCallback(Event evt){
 
 // Update camera
 void Camera::update(double delta) {
-  double currentTime = glfwGetTime();
   double factor = (double) 1/32;
   double max = factor*8;
-  double slow = factor/8; 
+  double slow = factor/8;
+
   // Increase velocity
   if(moveNorth) 
     moveVelY += factor;

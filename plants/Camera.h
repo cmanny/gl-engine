@@ -13,7 +13,6 @@ class Camera {
         moveVelX, moveVelY, moveVelZ;
     
     bool moveNorth, moveEast, moveSouth, moveWest;    
-
     EventManager* evtmgr;
     
     void scrollCallback(Event);
