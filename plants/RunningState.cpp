@@ -25,6 +25,9 @@ void RunningState::update(double delta) {
   // Update current scene
   if(scene != 0)
     scene->update(delta);
+
+  // Update camera
+  renderer->getCamera()->update(delta);
 }
 
 // Free resources

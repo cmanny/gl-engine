@@ -49,3 +49,7 @@ void Renderer::draw(){
   glDisableVertexAttribArray(0);
 }
 
+// Return camera instance
+Camera* Renderer::getCamera() {
+  return camera;
+}

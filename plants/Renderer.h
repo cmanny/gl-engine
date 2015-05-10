@@ -33,6 +33,7 @@ class Renderer {
   public:
     Renderer(EventManager*, int,int);
     void setEntities(vector<Entity*>* entities);
-    void draw(); 
+    void draw();
+    Camera* getCamera(); 
 };
 #endif
