@@ -18,15 +18,12 @@ class Engine {
   protected:
     EventManager* evtmgr;
     Renderer* renderer;
+    GLFWwindow* window; 
 
-
-  private:
-    GLFWwindow* window;
-    
+  private:  
     int width, height, frameRate, desktopWidth, desktopHeight;
     string title;
-    bool running, fullscreen;
-
+    bool running, fullscreen; 
     void callback(Event evt);
 
   public:
