@@ -1,35 +1,46 @@
 #include "Entity.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <GL/glew.h>
-#include <glfw3.h>
-#include <glm/glm.hpp>
-#include <vector>
 
 // Constructor
 Entity::Entity() {
-  vertexData = new GLfloat;
-  vertexBuffer = new GLuint;
+  data = new VertexData();
+}
+
+// Destructor
+Entity::~Entity() {
+  delete data;
 }
 
 // Get vertex data
-GLfloat* Entity::getVertexData() {
-  return vertexData;
+VertexData* Entity::getData() {
+  return data;
 }
 
-// Set vertex data
-void Entity::refreshBuffer() {
-  // Generate & bind vertex buffer
-  glGenBuffers(1, vertexBuffer);
-  glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
-      
-  // Pass updated vertices to OpenGL.
-  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*9, vertexData, GL_STATIC_DRAW);
-
+// Set x pos
+void Entity::setX(double x) {
+  this->x = x;
 }
 
-// Get vertex buffer
-GLuint* Entity::getVertexBuffer() {
-  return vertexBuffer;
+// Set y pos
+void Entity::setY(double y) {
+  this->y = y;
+}
+
+// Increment x pos
+void Entity::incX(double i) {
+  x += i;
+}
+
+// Increment y pos
+void Entity::incY(double i) {
+  y += i;
+}
+
+// Return x pos
+double Entity::getX() {
+  return x;
+}
+
+// Return y pos
+double Entity::getY() {
+  return y;
 }

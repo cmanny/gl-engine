@@ -1,31 +1,24 @@
 #ifndef ENTITY_H
 #define ENTITY_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <GL/glew.h>
-#include <glfw3.h>
-#include <glm/glm.hpp>
-#include <vector>
+#include "VertexData.h"
 
 class Entity {
-  protected:
-    GLfloat* vertexData = 0;
-    void refreshBuffer();
   private:
-    GLuint* vertexBuffer = 0;
+    VertexData* data;
+    double x, y;
 
   public:
     Entity();
-    //~Entity();
-    virtual void update(double delta)=0;
+    ~Entity();
+    virtual void update(double delta) = 0;
+    VertexData* getData();
 
-    // Accessor methods
-    GLfloat* getVertexData();
-    GLuint* getVertexBuffer();
-
-    // Mutator methods
+    void setX(double x);
+    void setY(double y);
+    void incX(double i);
+    void incY(double i);
+    double getX();
+    double getY();
 };
 
 #endif

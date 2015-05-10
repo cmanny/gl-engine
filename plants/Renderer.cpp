@@ -10,11 +10,16 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+  // Setup VAO
   glGenVertexArrays(1, &VertexArrayID);
   glBindVertexArray(VertexArrayID);
+
+  // Load shaders
   programID = LoadShaders( "shaders/SimpleTransform.vertexshader", "shaders/SingleColour.fragmentshader" );
   mvpMatID = glGetUniformLocation(programID, "MVP");
 
+  // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
   view = glm::lookAt(
     glm::vec3(0,0,16), 
@@ -34,13 +39,15 @@ void Renderer::draw(){
   // Clear the screen
   mvp = projection * camera->view() * model;
   glClear( GL_COLOR_BUFFER_BIT );
+
   // Use our shader
   glUseProgram(programID);
   glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
+
   // Enable drawing of vertex arrays
   glEnableVertexAttribArray(0);
   for(auto e = entities->begin(); e != entities->end(); e++){
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getVertexBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getData()->getVertexBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
     

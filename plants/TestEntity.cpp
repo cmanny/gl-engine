@@ -1,25 +1,15 @@
 #include "TestEntity.h"
-#include "Entity.h"
-#include <vector>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <GL/glew.h>
-#include <glfw3.h>
-#include <glm/glm.hpp>
 
 // Constructor
 TestEntity::TestEntity(){
-    vertexData = new GLfloat[9];
-    GLfloat jimData[] = {
+    GLfloat* _data = new GLfloat[9];
+    GLfloat data[] = {
     -1.0f, -1.0f, 0.0f,
      1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
     };
-    std::copy(jimData,jimData+9,vertexData);
-    refreshBuffer();
- 
-  // Do nothing. Just a test, so chill...
+    std::copy(data, data+9, _data);
+    getData()->setVertexData(_data);
 }
 
 // Override update method
