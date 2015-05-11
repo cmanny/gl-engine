@@ -30,6 +30,10 @@ void VertexData::setVertexData(GLfloat* vertexData, int size) {
   refreshBuffer();
 }
 
+int VertexData::numVerts(){
+  return size/3;
+}
+
 // Rebuild vertex buffer
 void VertexData::refreshBuffer() {
 

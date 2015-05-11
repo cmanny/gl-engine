@@ -15,4 +15,5 @@ class VertexData {
 
     void setVertexData(GLfloat* vertexData, int size);
     void refreshBuffer();
+    int numVerts();
 };

@@ -2,6 +2,7 @@
 #include "RunningState.h"
 #include "Scene.h"
 #include "TestEntity.h"
+#include "Sphere.h"
 #include "Entity.h"
 #include "Renderer.h"
 
@@ -13,12 +14,15 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
 
 void RunningState::init(){
   entities = new std::vector<Entity*>();
-
-  for(int i = 11; i < 400; i++){
+  
+  Entity* sphere = new Sphere(20.0f);
+  /*for(int i = 11; i < 400; i++){
     Entity* e = new TestEntity();
     e->move((double)(677%i) , (double)(501%i), 0.0f);
     entities->push_back(e);
-  }
+  }*/
+  sphere->move(0,0,0);
+  entities->push_back(sphere);
   renderer->setEntities(entities);
 }
 
