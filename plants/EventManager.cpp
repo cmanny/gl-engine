@@ -16,17 +16,21 @@ EventManager::EventManager(GLFWwindow* w) {
         );
 }
 
-int EventManager::enableCallback(CallbackBase* c){
+bool EventManager::enableCallback(CallbackBase* c){
   if(callbacks.count(c->getType()) > 0){
     callbacks[c->getType()]->push_back(c);
+    return true;
   }
+  return false;
 }
 
-int EventManager::disableCallback(CallbackBase* c){
+bool EventManager::disableCallback(CallbackBase* c){
   if(callbacks.count(c->getType()) > 0){
     list<CallbackBase*>* v = callbacks[c->getType()];
     v->remove(c);
+    return true;
   }
+  return false;
 }
 void EventManager::keyCallback(GLFWwindow* w,int key,int scancode,int action,int mods){
   cout << "Key callbacks" << "\n";
