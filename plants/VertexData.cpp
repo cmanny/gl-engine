@@ -1,7 +1,7 @@
 #include "VertexData.h"
 
 // Constructor
-VertexData::VertexData() {
+VertexData::VertexData(int size) {
   vertexData = new GLfloat[9];
   this->size = size;
   refreshBuffer();

@@ -7,7 +7,7 @@ class VertexData {
     int size;
 
   public:
-    VertexData();
+    VertexData(int);
     ~VertexData();
 
     GLfloat* getVertexData();
