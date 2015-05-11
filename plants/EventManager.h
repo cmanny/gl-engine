@@ -36,8 +36,8 @@ class EventManager {
   public:
     EventManager(GLFWwindow* w);
 
-    int enableCallback(CallbackBase*);
-    int disableCallback(CallbackBase*); 
+    bool enableCallback(CallbackBase*);
+    bool disableCallback(CallbackBase*); 
 
 };
 
