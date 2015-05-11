@@ -15,7 +15,7 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
 void RunningState::init(){
   entities = new std::vector<Entity*>();
   
-  Entity* sphere = new Sphere(20.0f);
+  Entity* sphere = new Sphere(15.0f);
   /*for(int i = 11; i < 400; i++){
     Entity* e = new TestEntity();
     e->move((double)(677%i) , (double)(501%i), 0.0f);

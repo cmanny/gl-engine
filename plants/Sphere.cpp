@@ -7,10 +7,11 @@ Sphere::Sphere(GLfloat detail){
   GLfloat zc = 0, yc = 0, xc= 0, angInc = 2*M_PI/detail;
   GLfloat decrement = 1.0f/detail;
   int count = 0;
-  for(zc = 1.0f; zc > -1.0f; zc -= decrement){
-    GLfloat nextZc = zc - decrement;
-    GLfloat nextR = 1.0f - glm::abs(nextZc);
-    GLfloat r = 1.0f - glm::abs(zc);
+  for(GLfloat angZ = 0.0f; angZ < M_PI; angZ += angInc/2){
+    zc = glm::cos(angZ);
+    GLfloat nextZc = glm::cos(angZ + angInc);
+    GLfloat nextR = glm::sqrt(1 - nextZc*nextZc);
+    GLfloat r = glm::sqrt(1- zc*zc);
     for(GLfloat ang = 0.0f; ang < 2*M_PI; ang += angInc){
       GLfloat yc = r*glm::sin(ang);
       GLfloat xc = r*glm::cos(ang);
@@ -39,5 +40,5 @@ Sphere::Sphere(GLfloat detail){
 }
 
 void Sphere::update(double delta){
-  rotate(2.0f);
+  rotate(3.0f);
 }
