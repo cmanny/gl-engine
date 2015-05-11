@@ -11,6 +11,8 @@
 #include "Entity.h"
 
 class TestEntity : public Entity {
+  private:
+    double lastTime;
   public:
     TestEntity();
     void update(double delta);

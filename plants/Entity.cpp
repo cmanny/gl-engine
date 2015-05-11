@@ -3,6 +3,9 @@
 // Constructor
 Entity::Entity() {
   data = new VertexData();
+  model = glm::mat4(1.0f);
+  rotationAxes = glm::vec3(0.0f,0.0f,1.0f);
+  x = y = rotation = 0;
 }
 
 // Destructor
@@ -15,32 +18,16 @@ VertexData* Entity::getData() {
   return data;
 }
 
-// Set x pos
-void Entity::setX(double x) {
+void Entity::move(double x, double y, double z){
   this->x = x;
-}
-
-// Set y pos
-void Entity::setY(double y) {
   this->y = y;
+  model = glm::translate(model, glm::vec3(x, y, z));
 }
 
-// Increment x pos
-void Entity::incX(double i) {
-  x += i;
+void Entity::rotate(float angle){
+  model = glm::rotate(model, angle, rotationAxes);
 }
 
-// Increment y pos
-void Entity::incY(double i) {
-  y += i;
-}
-
-// Return x pos
-double Entity::getX() {
-  return x;
-}
-
-// Return y pos
-double Entity::getY() {
-  return y;
+glm::mat4 Entity::getModel(){
+  return model;
 }

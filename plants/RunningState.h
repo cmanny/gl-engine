@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Renderer.h"
 #include "EventManager.h"
+#include <vector>
 
 class Scene;
 
@@ -13,6 +14,7 @@ class RunningState : public GameState {
     Scene* scene = 0;
     EventManager* evtmgr = 0;
     Renderer* renderer = 0;
+    std::vector<Entity*>* entities = 0;
 
   public:
     RunningState(EventManager*, Renderer*);

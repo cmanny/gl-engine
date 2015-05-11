@@ -1,4 +1,3 @@
-#include <vector>
 
 #include "RunningState.h"
 #include "Scene.h"
@@ -14,7 +13,7 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
 
 void RunningState::init(){
   TestEntity* entity = new TestEntity();
-  std::vector<Entity*>* entities = new std::vector<Entity*>();
+  entities = new std::vector<Entity*>();
   entities->push_back(entity);
   renderer->setEntities(entities);
 }
@@ -28,6 +27,9 @@ void RunningState::update(double delta) {
 
   // Update camera
   renderer->getCamera()->update(delta);
+  for(auto e = entities->begin(); e != entities->end(); ++e){
+    (*e)->update(delta);
+  }
 }
 
 // Free resources

@@ -2,10 +2,11 @@
 
 // Constructor
 VertexData::VertexData(int size) {
-  vertexData = new GLfloat[9];
+  vertexData = new GLfloat[size];
   this->size = size;
-  refreshBuffer();
 }
+
+VertexData::VertexData(){ }
 
 // Destructor
 VertexData::~VertexData() {

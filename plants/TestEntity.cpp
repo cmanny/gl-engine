@@ -10,9 +10,14 @@ TestEntity::TestEntity(){
     };
     std::copy(data, data+9, _data);
     getData()->setVertexData(_data, 9);
+    lastTime = glfwGetTime(); 
 }
 
 // Override update method
 void TestEntity::update(double delta) {
   // Do nothing... just chilling...
+  if(delta){
+    rotate(2.0f*delta);
+    lastTime = glfwGetTime();
+  }
 }
