@@ -1,12 +1,10 @@
 #include "VertexData.h"
 
 // Constructor
-VertexData::VertexData(int size) {
-  vertexData = new GLfloat[size];
-  this->size = size;
+VertexData::VertexData() {
+  vertexBuffer = new GLuint;
 }
 
-VertexData::VertexData(){ }
 
 // Destructor
 VertexData::~VertexData() {

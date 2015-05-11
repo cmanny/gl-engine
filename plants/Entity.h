@@ -6,8 +6,9 @@
 #include "VertexData.h"
 
 class Entity {
-  private:
+  protected:
     VertexData* data;
+  private:
     glm::mat4 model;
     glm::vec3 rotationAxes;
     double x, y;

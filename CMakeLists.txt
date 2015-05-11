@@ -37,7 +37,7 @@ include_directories(
 	external/glew-1.9.0/include/
 	.
 )
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3")
 
 set(ALL_LIBS
   -w

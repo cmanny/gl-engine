@@ -12,9 +12,13 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
 }
 
 void RunningState::init(){
-  TestEntity* entity = new TestEntity();
   entities = new std::vector<Entity*>();
-  entities->push_back(entity);
+
+  for(int i = 11; i < 400; i++){
+    Entity* e = new TestEntity();
+    e->move((double)(677%i) , (double)(501%i), 0.0f);
+    entities->push_back(e);
+  }
   renderer->setEntities(entities);
 }
 
@@ -28,7 +32,7 @@ void RunningState::update(double delta) {
   // Update camera
   renderer->getCamera()->update(delta);
   for(auto e = entities->begin(); e != entities->end(); ++e){
-    (*e)->update(delta);
+   (*e)->update(delta);
   }
 }
 
