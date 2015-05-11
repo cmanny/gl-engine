@@ -24,7 +24,8 @@ GLuint* VertexData::getVertexBuffer() {
 
 // Set vertex data
 void VertexData::setVertexData(GLfloat* vertexData, int size) {
-  this->vertexData = vertexData;
+  this->vertexData = new GLfloat[size];
+  std::copy(vertexData, vertexData+size, this->vertexData);
   this->size = size;
   refreshBuffer();
 }
