@@ -3,6 +3,7 @@
 // Constructor
 VertexData::VertexData() {
   vertexData = new GLfloat[9];
+  this->size = size;
   refreshBuffer();
 }
 
@@ -23,8 +24,9 @@ GLuint* VertexData::getVertexBuffer() {
 }
 
 // Set vertex data
-void VertexData::setVertexData(GLfloat* vertexData) {
+void VertexData::setVertexData(GLfloat* vertexData, int size) {
   this->vertexData = vertexData;
+  this->size = size;
   refreshBuffer();
 }
 
@@ -36,6 +38,6 @@ void VertexData::refreshBuffer() {
   glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
       
   // Pass updated vertices to OpenGL.
-  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*9, 
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*size, 
       vertexData, GL_STATIC_DRAW);
 }

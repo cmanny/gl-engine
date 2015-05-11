@@ -9,7 +9,7 @@ TestEntity::TestEntity(){
      0.0f,  1.0f, 0.0f,
     };
     std::copy(data, data+9, _data);
-    getData()->setVertexData(_data);
+    getData()->setVertexData(_data, 9);
 }
 
 // Override update method
