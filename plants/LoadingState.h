@@ -5,9 +5,6 @@
 #include "EventManager.h"
 #include "Renderer.h"
 
-class MenuState;
-class RunningState;
-
 class LoadingState : public GameState {
   public:
     LoadingState(EventManager* evtmgr, Renderer* renderer);

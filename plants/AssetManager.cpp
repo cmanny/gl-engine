@@ -10,7 +10,7 @@ AssetManager::AssetManager() {
 
 // Destructor
 AssetManager::~AssetManager() {
-  delete &DEFAULT_SHADER;
+  //delete &DEFAULT_SHADER;
 }
 
 // Load assets

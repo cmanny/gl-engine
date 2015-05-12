@@ -44,5 +44,5 @@ GameState* RunningState::update(double delta) {
 
 // Free resources
 void RunningState::dispose() {
-  scene->dispose();
+  //scene->dispose();
 }

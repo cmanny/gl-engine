@@ -16,7 +16,9 @@ void MenuState::init() {
 
 // Update
 GameState* MenuState::update(double delta){
-  return new RunningState(evtmgr, renderer);
+  GameState* g = new RunningState(evtmgr, renderer);
+  g->init();
+  return g; 
 }
 
 // Free resources
