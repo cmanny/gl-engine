@@ -37,8 +37,11 @@ Sphere::Sphere(GLfloat detail){
   }
   std::cout << "Count: " << count << "\n";
   getData()->setVertexData(verticies, size);
+  angle = 0;
 }
 
 void Sphere::update(double delta){
-  rotate(3.0f);
+  rotate(0.1);
+  move(0.1*glm::cos(angle),0.1*glm::sin(angle),0.1*glm::cos(angle));
+  angle += M_PI*2/256;
 }

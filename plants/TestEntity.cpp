@@ -14,6 +14,8 @@ TestEntity::TestEntity(){
 // Override update method
 void TestEntity::update(double delta) {
   // Do nothing... just chilling...
+  
+  
   if(true){
     
     rotate(8.0f);

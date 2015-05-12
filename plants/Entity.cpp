@@ -21,6 +21,7 @@ VertexData* Entity::getData() {
 void Entity::move(double x, double y, double z){
   this->x = x;
   this->y = y;
+  this->z = z;
   model = glm::translate(model, glm::vec3(x, y, z));
 }
 

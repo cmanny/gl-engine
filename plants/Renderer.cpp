@@ -6,7 +6,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   
   camera = new Camera(evtmgr);
-  camera->init(0,0,16);
+  camera->init(100,100,64);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);

@@ -8,12 +8,14 @@
 class Entity {
   protected:
     VertexData* data;
+    double x, y, z;
+    double rotation;
+    double angle;
+
   private:
     glm::mat4 model;
     glm::vec3 rotationAxes;
-    double x, y;
-    double rotation;
-
+    
   public:
     Entity();
     ~Entity();

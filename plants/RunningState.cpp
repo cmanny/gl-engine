@@ -14,15 +14,12 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
 
 void RunningState::init(){
   entities = new std::vector<Entity*>();
-  
-  Entity* sphere = new Sphere(15.0f);
-  /*for(int i = 11; i < 400; i++){
-    Entity* e = new TestEntity();
-    e->move((double)(677%i) , (double)(501%i), 0.0f);
-    entities->push_back(e);
-  }*/
-  sphere->move(0,0,0);
-  entities->push_back(sphere);
+ 
+  for(int i = 4; i < 10; i++){ 
+    Entity* sphere = new Sphere((float)i*i);
+    sphere->move(i*i,i*i,0);
+    entities->push_back(sphere);
+  }
   renderer->setEntities(entities);
 }
 
