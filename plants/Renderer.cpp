@@ -6,7 +6,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   
   camera = new Camera(evtmgr);
-  camera->init(0,0,256);
+  camera->init(64,64,128);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -49,7 +49,7 @@ void Renderer::draw(){
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
     glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getData()->getVertexBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts()); // 3 indices starting at 0 -> 1 triangle
     
   }
   glDisableVertexAttribArray(0);

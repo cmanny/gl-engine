@@ -1,5 +1,5 @@
 #include <GL/glew.h>
-
+#include <algorithm>
 class VertexData {
   private:
     GLfloat* vertexData;
@@ -15,4 +15,5 @@ class VertexData {
 
     void setVertexData(GLfloat* vertexData, int size);
     void refreshBuffer();
+    int numVerts();
 };
