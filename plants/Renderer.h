@@ -20,9 +20,7 @@ class Renderer {
   private:
     vector<Entity*>* entities;
     int screenW, screenH;
-    GLuint VertexArrayID, 
-           programID, 
-           mvpMatID,
+    GLuint VertexArrayID,  
            vertexbuffer;
     glm::mat4 projection,
               view,

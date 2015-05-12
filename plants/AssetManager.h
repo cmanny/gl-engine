@@ -14,7 +14,7 @@ class AssetManager {
     void loadAssets();
 
     // Define shaders
-    GLuint DEFAULT_SHADER;
+    GLuint* DEFAULT_SHADER = 0;
 };
 
 #endif

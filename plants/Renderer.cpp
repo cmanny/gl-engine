@@ -1,4 +1,6 @@
 #include "Renderer.h"
+#include "AssetManager.h"
+
 // Constructor
 Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   std::cout << "Renderer init\n";
@@ -13,11 +15,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
 
   // Setup VAO
   glGenVertexArrays(1, &VertexArrayID);
-  glBindVertexArray(VertexArrayID);
-
-  // Load shaders
-  programID = LoadShaders( "shaders/SimpleTransform.vertexshader", "shaders/SingleColour.fragmentshader" );
-  mvpMatID = glGetUniformLocation(programID, "MVP");
+  glBindVertexArray(VertexArrayID); 
 
   // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
@@ -26,6 +24,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
     glm::vec3(0,0,0), 
     glm::vec3(0,1,0)
     );
+
   model = glm::mat4(1.0f);
   mvp = projection*view*model; 
 } 
@@ -39,18 +38,22 @@ void Renderer::draw(){
   // Clear the screen
   glClear( GL_COLOR_BUFFER_BIT );
 
-  // Use our shader
-  glUseProgram(programID);
-
   // Enable drawing of vertex arrays
   glEnableVertexAttribArray(0);
   for(auto e = entities->begin(); e != entities->end(); e++){
     mvp = projection * camera->view() * (*e)->getModel();
+    
+    GLuint* shader = (*e)->getShader();
+    if(*shader == 0) 
+      shader = AssetManager::assets->DEFAULT_SHADER;
+
+    GLuint mvpMatID = glGetUniformLocation(*shader, "MVP");
+    glUseProgram(*shader);
+
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
     glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getData()->getVertexBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts()); // 3 indices starting at 0 -> 1 triangle
-    
+    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts());   
   }
   glDisableVertexAttribArray(0);
 }
