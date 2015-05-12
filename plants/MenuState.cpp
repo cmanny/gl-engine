@@ -1,7 +1,7 @@
 #include "MenuState.h"
 
-void MenuState::update(double delta){
-
+GameState* MenuState::update(double delta){
+  return this;
 }
 
 void MenuState::dispose(){

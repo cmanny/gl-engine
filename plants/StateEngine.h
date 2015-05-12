@@ -4,7 +4,6 @@
 #include "Engine.h"
 #include "GameState.h"
 
-
 class StateEngine: public Engine {
     GameState* state;
     int nbFrames;

@@ -4,6 +4,7 @@
 #include "TestEntity.h"
 #include "Entity.h"
 #include "Renderer.h"
+#include "GameState.h"
 
 // Constructor
 RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
@@ -23,7 +24,7 @@ void RunningState::init(){
 }
 
 // Update game
-void RunningState::update(double delta) {
+GameState* RunningState::update(double delta) {
  
   // Update current scene
   if(scene != 0)
@@ -31,9 +32,13 @@ void RunningState::update(double delta) {
 
   // Update camera
   renderer->getCamera()->update(delta);
+
+  // Update entities
   for(auto e = entities->begin(); e != entities->end(); ++e){
    (*e)->update(delta);
   }
+
+  return this;
 }
 
 // Free resources

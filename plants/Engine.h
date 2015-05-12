@@ -10,6 +10,7 @@
 
 #include "EventManager.h"
 #include "Renderer.h"
+#include "AssetManager.h"
 
 using namespace glm;
 using namespace std;

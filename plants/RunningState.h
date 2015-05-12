@@ -19,7 +19,7 @@ class RunningState : public GameState {
   public:
     RunningState(EventManager*, Renderer*);
     void init();
-    void update(double delta);
+    GameState* update(double delta);
     void dispose();
 };
 

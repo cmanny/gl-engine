@@ -19,9 +19,15 @@ void StateEngine::setState(GameState* state) {
 
 // Override update method
 void StateEngine::update(double delta) {
-  if(state != NULL)
-    state->update(delta);
+ 
+  // Update state 
+  if(state != NULL) {
+    GameState* result = state->update(delta);
 
+    // Handle state update
+    if(result != state && result != 0)
+      setState(result);
+  }
   setWindowFPS();
 }
 

@@ -9,7 +9,7 @@
 
 #include "Engine.h"
 #include "Renderer.h"
-
+#include "AssetManager.h"
 
 using namespace glm;
 using namespace std;
@@ -66,7 +66,6 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   // Additional setup of other components
   evtmgr = new EventManager(window);
   renderer = new Renderer(evtmgr, width, height);
-
 }
 
 void Engine::callback(Event evt){
