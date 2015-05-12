@@ -1,5 +1,14 @@
 #include "LoadingState.h"
 #include "AssetManager.h"
+#include "Renderer.h"
+#include "GameState.h"
+
+// Constructor
+LoadingState::LoadingState(EventManager* evtmgr, Renderer* renderer) :
+  GameState(evtmgr, renderer)
+{
+
+}
 
 // Initialise state
 void LoadingState::init() {

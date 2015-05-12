@@ -12,8 +12,6 @@ class Scene;
 class RunningState : public GameState {
   private:
     Scene* scene = 0;
-    EventManager* evtmgr = 0;
-    Renderer* renderer = 0;
     std::vector<Entity*>* entities = 0;
 
   public:

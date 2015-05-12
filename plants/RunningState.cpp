@@ -8,9 +8,8 @@
 #include "GameState.h"
 
 // Constructor
-RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) {
-  this->evtmgr = evtmgr;
-  this->renderer = renderer;
+RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState(evtmgr, renderer) {
+  
 }
 
 void RunningState::init(){
