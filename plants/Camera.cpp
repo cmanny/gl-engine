@@ -10,10 +10,10 @@ Camera::Camera(EventManager* evtmgr){
 void Camera::init(int x, int y, int z){
   evtmgr->enableCallback(new Callback<Camera>(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
   evtmgr->enableCallback(new Callback<Camera>(this, EVT_KEY, &Camera::keyCallback));
-  eyeX = x;
-  eyeY = y;
+  centreX = eyeX = x;
+  centreY = eyeY = y;
   eyeZ = z;
-  centreX = centreY = centreZ = 0;
+  centreZ = 0;
   moveVelX = moveVelY = moveVelZ = 0;
   moveNorth = moveEast = moveSouth = moveWest = false;
 }
