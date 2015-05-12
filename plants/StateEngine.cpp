@@ -1,10 +1,11 @@
 #include "StateEngine.h"
 #include "RunningState.h"
+#include "LoadingState.h"
 
 // Constructor
 StateEngine::StateEngine(int width, int height, int frameRate, string title) : 
   Engine(width, height, frameRate, title) {
-    this->state = new RunningState(evtmgr, renderer);
+    this->state = new LoadingState(evtmgr, renderer);
     this->state->init();
 
     nbFrames = 0;

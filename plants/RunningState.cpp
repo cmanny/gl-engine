@@ -6,10 +6,11 @@
 #include "Entity.h"
 #include "Renderer.h"
 #include "GameState.h"
+#include <iostream> 
 
 // Constructor
 RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState(evtmgr, renderer) {
-  
+  cout << "Entering RunningState\n";
 }
 
 void RunningState::init(){

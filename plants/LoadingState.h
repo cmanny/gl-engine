@@ -5,7 +5,10 @@
 #include "EventManager.h"
 #include "Renderer.h"
 
-class LoadingState : GameState {
+class MenuState;
+class RunningState;
+
+class LoadingState : public GameState {
   public:
     LoadingState(EventManager* evtmgr, Renderer* renderer);
     void init();

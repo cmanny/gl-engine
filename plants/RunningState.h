@@ -8,6 +8,7 @@
 #include <vector>
 
 class Scene;
+class Entity;
 
 class RunningState : public GameState {
   private:
