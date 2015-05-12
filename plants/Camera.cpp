@@ -99,8 +99,9 @@ void Camera::update(double delta) {
     moveVelY = -max;
 
   // Update camera position
-  centreX += moveVelX;
-  centreY += moveVelY;  
+  eyeX = centreX += moveVelX;
+  eyeY = centreY += moveVelY;  
+  
 }
 
 
