@@ -2,7 +2,7 @@
 
 Sphere::Sphere(GLfloat detail){
   this->detail = detail;
-  int size = detail*detail*9;
+  int size = detail*detail*18;
   GLfloat* verticies = new GLfloat[size];
   GLfloat zc = 0, yc = 0, xc= 0, angInc = 2*M_PI/detail;
   GLfloat decrement = 1.0f/detail;
@@ -19,7 +19,9 @@ Sphere::Sphere(GLfloat detail){
       GLfloat leftXc = nextR*glm::cos(ang);
       GLfloat rightYc = nextR*glm::sin(ang + angInc);
       GLfloat rightXc = nextR*glm::cos(ang + angInc);
-      
+      GLfloat nextYc = r*glm::sin(ang + angInc);
+      GLfloat nextXc = r*glm::cos(ang + angInc);
+
       verticies[count+0] = xc;
       verticies[count+1] = yc;
       verticies[count+2] = zc;
@@ -32,11 +34,22 @@ Sphere::Sphere(GLfloat detail){
       verticies[count+7] = rightYc;
       verticies[count+8] = nextZc;
 
-      count += 9;
+      verticies[count+9] = xc;
+      verticies[count+10] = yc;
+      verticies[count+11] = zc;
+
+      verticies[count+15] = rightXc;
+      verticies[count+16] = rightYc;
+      verticies[count+17] = nextZc;
+
+      verticies[count+12] = nextXc;
+      verticies[count+13] = nextYc;
+      verticies[count+14] = zc;
+      count += 18;
     } 
   }
   std::cout << "Count: " << count << "\n";
-  getData()->setVertexData(verticies, size);
+  getData()->setVertexData(verticies, count);
   angle = 0;
 }
 
