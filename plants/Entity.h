@@ -30,6 +30,9 @@ class Entity {
     void rotate(float);
     glm::mat4 getModel();
 
+    double getX();
+    double getY();
+    double getZ();
 };
 
 #endif

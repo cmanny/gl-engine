@@ -31,6 +31,7 @@ class Renderer {
   public:
     Renderer(EventManager*, int,int);
     void setEntities(vector<Entity*>* entities);
+    void addEntity(Entity* entity);
     void draw();
     Camera* getCamera(); 
 };

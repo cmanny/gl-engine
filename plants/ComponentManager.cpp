@@ -34,6 +34,12 @@ void ComponentManager::disable() {
   evtmgr->disableCallback(&ComponentManager::keystroke)*/;
 }
 
+// Update components
+void ComponentManager::update(double delta) {
+  for(int i = 0; i<components->size(); i++)
+    components->at(i)->update(delta);
+}
+
 // Add component
 void ComponentManager::add(Component* component) {
   components->push_back(component);

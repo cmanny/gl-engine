@@ -14,6 +14,8 @@ class ComponentManager {
   public:
     ComponentManager(EventManager* evtmgr);
     ~ComponentManager();
+    
+    void update(double delta);
 
     void enable();
     void disable();

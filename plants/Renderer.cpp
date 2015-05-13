@@ -8,7 +8,7 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   
   camera = new Camera(evtmgr);
-  camera->init(64,64,128);
+  camera->init(0,0,128);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -33,6 +33,11 @@ void Renderer::setEntities(vector<Entity*>* entities){
   this->entities = entities;
 }
 
+// Add entity
+void Renderer::addEntity(Entity* entity) {
+  entities->push_back(entity);
+}
+
 // Render entities
 void Renderer::draw(){
   // Clear the screen
@@ -41,7 +46,11 @@ void Renderer::draw(){
   // Enable drawing of vertex arrays
   glEnableVertexAttribArray(0);
   for(auto e = entities->begin(); e != entities->end(); e++){
+    if((*e)->getData()->getVertexData() == 0)
+      std::cout << "pointer fail";
+    
     mvp = projection * camera->view() * (*e)->getModel();
+
     
     GLuint* shader = (*e)->getShader();
     if(*shader == 0) 

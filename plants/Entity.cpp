@@ -1,7 +1,8 @@
 #include "Entity.h"
-
+#include <iostream>
 // Constructor
 Entity::Entity() {
+  std::cout << "new vertex data\n";
   data = new VertexData();
   model = glm::mat4(1.0f);
   rotationAxes = glm::vec3(1.0f,0.0f,1.0f);
@@ -41,4 +42,19 @@ void Entity::setShader(GLuint* shader) {
 
 GLuint* Entity::getShader() {
   return shader;
+}
+
+// Get entity x co-ordinate
+double Entity::getX() {
+  return x;
+}
+
+// Get entity y co-ordinate
+double Entity::getY() {
+  return y;
+}
+
+// Get entity z co-ordinate
+double Entity::getZ() {
+  return z;
 }

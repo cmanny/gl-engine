@@ -4,8 +4,12 @@
 #include "GameState.h"
 #include "EventManager.h"
 #include "Renderer.h"
+#include "ComponentManager.h"
 
 class MenuState : public GameState {
+  private:
+    ComponentManager* manager;
+
 
   public:
     MenuState(EventManager* evtmgr, Renderer* renderer);

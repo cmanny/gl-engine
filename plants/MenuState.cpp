@@ -1,6 +1,8 @@
 #include "MenuState.h"
 #include "RunningState.h"
 #include <iostream>
+#include "ButtonComponent.h"
+#include <string>
 
 // Constructor
 MenuState::MenuState(EventManager* evtmgr, Renderer* renderer) : 
@@ -11,14 +13,27 @@ MenuState::MenuState(EventManager* evtmgr, Renderer* renderer) :
 
 // Initialise menu state
 void MenuState::init() {
+  manager = new ComponentManager(evtmgr);
 
+  // Add temp button
+  //Component* btnTest = new ButtonComponent("Jimmers", 5, 10);
+  //btnTest->move(64, 64, 0);
+
+  //renderer->addEntity(btnTest);
+  //manager->add(btnTest);
 }
 
 // Update
 GameState* MenuState::update(double delta){
-  GameState* g = new RunningState(evtmgr, renderer);
+
+  //manager->update(delta);
+
+  // Navigate to running state
+  /*GameState* g = new RunningState(evtmgr, renderer);
   g->init();
-  return g; 
+  return g;*/
+
+ return this; 
 }
 
 // Free resources
