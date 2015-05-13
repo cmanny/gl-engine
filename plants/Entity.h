@@ -8,7 +8,7 @@
 
 class Entity {
   protected:
-    VertexData* data;
+    VertexData* data, *colourData;
     GLuint* shader;
     double x, y, z;
     double rotation;
@@ -23,6 +23,7 @@ class Entity {
     ~Entity();
     virtual void update(double delta) = 0;
     VertexData* getData();
+    VertexData* getColour();
     void setShader(GLuint* shader);
     GLuint* getShader();
 

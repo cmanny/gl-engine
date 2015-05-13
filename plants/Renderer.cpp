@@ -39,7 +39,6 @@ void Renderer::draw(){
   glClear( GL_COLOR_BUFFER_BIT );
 
   // Enable drawing of vertex arrays
-  glEnableVertexAttribArray(0);
   for(auto e = entities->begin(); e != entities->end(); e++){
     mvp = projection * camera->view() * (*e)->getModel();
     
@@ -51,11 +50,19 @@ void Renderer::draw(){
     glUseProgram(*shader);
 
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
+
+    glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getData()->getVertexBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts());   
+    
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getColour()->getVertexBuffer());
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);    
+
+    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts());    
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
   }
-  glDisableVertexAttribArray(0);
 }
 
 // Return camera instance

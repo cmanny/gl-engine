@@ -55,15 +55,14 @@ add_definitions(
 )
 FILE(GLOB plantSources plants/*.cpp)
 
+FILE(GLOB shaders plants/shaders/*.*shader)
+
 # Tutorial 1
 add_executable(plants 
   ${plantSources}
   common/shader.cpp
   common/shader.hpp
-  plants/shaders/SimpleFragmentShader.fragmentshader
-  plants/shaders/SimpleVertexShader.vertexshader
-  plants/shaders/SimpleTransform.vertexshader
-  plants/shaders/SingleColour.fragmentshader
+  ${shaders}
 )
 
 target_link_libraries(plants

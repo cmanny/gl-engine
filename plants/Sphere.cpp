@@ -48,8 +48,13 @@ Sphere::Sphere(GLfloat detail){
       count += 18;
     } 
   }
+  GLfloat* colourData = new GLfloat[count];
+  for(int i = 0; i < count; i++){
+    colourData[i] = (i)/(float)count;
+  }
   std::cout << "Count: " << count << "\n";
   getData()->setVertexData(verticies, count);
+  getColour()->setVertexData(colourData, count);
   angle = 0;
 }
 

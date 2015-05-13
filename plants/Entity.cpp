@@ -3,6 +3,7 @@
 // Constructor
 Entity::Entity() {
   data = new VertexData();
+  colourData = new VertexData();
   model = glm::mat4(1.0f);
   rotationAxes = glm::vec3(1.0f,0.0f,1.0f);
   x = y = rotation = 0;
@@ -18,6 +19,10 @@ Entity::~Entity() {
 // Get vertex data
 VertexData* Entity::getData() {
   return data;
+}
+
+VertexData* Entity::getColour(){
+  return colourData;
 }
 
 void Entity::move(double x, double y, double z){
