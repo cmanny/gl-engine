@@ -1,10 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+
 #include <glm/glm.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "VertexData.h"
-#include "GL/glew.h"
 
 class Entity {
   protected:
