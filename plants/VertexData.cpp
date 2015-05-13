@@ -3,6 +3,7 @@
 // Constructor
 VertexData::VertexData() {
   vertexBuffer = new GLuint;
+  vertexData = 0;
 }
 
 

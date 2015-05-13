@@ -19,7 +19,10 @@ void LoadingState::init() {
 // Update 
 GameState* LoadingState::update(double delta) {
 
-  return new MenuState(evtmgr, renderer);
+  GameState* g = new MenuState(evtmgr, renderer);
+  g->init();
+
+  return g;
 }
 
 // Free resources

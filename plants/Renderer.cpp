@@ -28,11 +28,16 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
 
   model = glm::mat4(1.0f);
   mvp = projection*view*model; 
-  entities = 0;
+  entities = new vector<Entity*>();
 } 
 // Set entity render list
 void Renderer::setEntities(vector<Entity*>* entities){
   this->entities = entities;
+}
+
+// Add entity
+void Renderer::addEntity(Entity* entity) {
+  entities->push_back(entity);
 }
 
 // Render entities
@@ -46,7 +51,11 @@ void Renderer::draw(){
 
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
+    if((*e)->getData()->getVertexData() == 0)
+      std::cout << "pointer fail";
+    
     mvp = projection * camera->view() * (*e)->getModel();
+
     
     GLuint* shader = (*e)->getShader();
     if(*shader == 0) 
