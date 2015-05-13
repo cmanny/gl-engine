@@ -31,7 +31,6 @@ class Renderer {
 
   public:
     Renderer(GLFWwindow* w, EventManager*, int,int);
-    void setEntities(vector<Entity*>* entities);
     void addEntity(Entity* entity);
     void draw();
     Camera* getCamera(); 

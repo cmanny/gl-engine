@@ -20,8 +20,8 @@ void RunningState::init(){
     Entity* sphere = new Sphere(i);
     //sphere->move(i + i % 11,i + i % 19,0);
     entities->push_back(sphere);
+    renderer->addEntity(sphere);
   }
-  renderer->setEntities(entities);
 }
 
 // Update game

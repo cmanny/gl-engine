@@ -31,9 +31,6 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   entities = new vector<Entity*>();
 } 
 // Set entity render list
-void Renderer::setEntities(vector<Entity*>* entities){
-  this->entities = entities;
-}
 
 // Add entity
 void Renderer::addEntity(Entity* entity) {
