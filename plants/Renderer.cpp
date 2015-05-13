@@ -8,7 +8,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   this->window = w;  
   camera = new Camera(evtmgr);
-  camera->init(64,64,128);
+  camera->init(0,0,64);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -28,6 +28,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
 
   model = glm::mat4(1.0f);
   mvp = projection*view*model; 
+  entities = 0;
 } 
 // Set entity render list
 void Renderer::setEntities(vector<Entity*>* entities){
@@ -37,6 +38,10 @@ void Renderer::setEntities(vector<Entity*>* entities){
 // Render entities
 void Renderer::draw(){
   // Clear the screen
+  if(entities == 0){
+    std::cout << "Entities not initialised";
+    return;
+  }
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Enable drawing of vertex arrays
