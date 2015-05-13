@@ -18,6 +18,7 @@ using namespace std;
 
 class Renderer {
   private:
+    GLFWwindow* window;
     vector<Entity*>* entities;
     int screenW, screenH;
     GLuint VertexArrayID,  
@@ -29,7 +30,7 @@ class Renderer {
     Camera* camera;
 
   public:
-    Renderer(EventManager*, int,int);
+    Renderer(GLFWwindow* w, EventManager*, int,int);
     void setEntities(vector<Entity*>* entities);
     void draw();
     Camera* getCamera(); 

@@ -16,9 +16,9 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 void RunningState::init(){
   entities = new std::vector<Entity*>();
  
-  for(int i = 20; i < 100; i++){ 
+  for(int i = 999; i < 1000; i++){ 
     Entity* sphere = new Sphere(i);
-    sphere->move(i + i % 11,i + i % 19,0);
+    //sphere->move(i + i % 11,i + i % 19,0);
     entities->push_back(sphere);
   }
   renderer->setEntities(entities);

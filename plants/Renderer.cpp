@@ -2,11 +2,11 @@
 #include "AssetManager.h"
 
 // Constructor
-Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
+Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   std::cout << "Renderer init\n";
   this->screenW = scrW;
   this->screenH = scrH;
-  
+  this->window = w;  
   camera = new Camera(evtmgr);
   camera->init(64,64,128);
 
@@ -16,7 +16,8 @@ Renderer::Renderer(EventManager* evtmgr, int scrW, int scrH){
   // Setup VAO
   glGenVertexArrays(1, &VertexArrayID);
   glBindVertexArray(VertexArrayID); 
-
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
   // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
   view = glm::lookAt(
@@ -36,7 +37,7 @@ void Renderer::setEntities(vector<Entity*>* entities){
 // Render entities
 void Renderer::draw(){
   // Clear the screen
-  glClear( GL_COLOR_BUFFER_BIT );
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
@@ -63,6 +64,7 @@ void Renderer::draw(){
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
   }
+
 }
 
 // Return camera instance

@@ -65,7 +65,7 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   
   // Additional setup of other components
   evtmgr = new EventManager(window);
-  renderer = new Renderer(evtmgr, width, height);
+  renderer = new Renderer(window, evtmgr, width, height);
 }
 
 void Engine::callback(Event evt){
@@ -99,9 +99,10 @@ void Engine::start() {
      update(delta);
      renderer->draw(); 
 
-     glfwSwapBuffers(window);
      //glfwWaitEvents(); 
      glfwPollEvents();
+
+     glfwSwapBuffers(window);
   } 
   
   // Check if the ESC key was pressed or the window was closed
