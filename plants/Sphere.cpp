@@ -49,8 +49,10 @@ Sphere::Sphere(GLfloat detail){
     } 
   }
   GLfloat* colourData = new GLfloat[count];
-  for(int i = 0; i < count; i++){
-    colourData[i] = (i)/(float)count;
+  for(int i = 0; i < count; i += 3){
+    colourData[i] = glm::cos(i*M_PI/180);
+    colourData[i+1] = glm::sin(i*M_PI/180);
+    colourData[i+2] = glm::cos(i*i*M_PI/180);
   }
   std::cout << "Count: " << count << "\n";
   getData()->setVertexData(verticies, count);
