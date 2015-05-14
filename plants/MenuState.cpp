@@ -16,21 +16,21 @@ void MenuState::init() {
   manager = new ComponentManager(evtmgr);
 
   // Add temp button
-  Component* btnTest = new ButtonComponent("Jimmers", 5, 10);
+  //Component* btnTest = new ButtonComponent("Jimmers", 5, 10);
 
-  renderer->addEntity(btnTest);
-  manager->add(btnTest);
+  //renderer->addEntity(btnTest);
+  //manager->add(btnTest);
 }
 
 // Update
 GameState* MenuState::update(double delta){
 
-  //manager->update(delta);
+  manager->update(delta);
 
   // Navigate to running state
-  /*GameState* g = new RunningState(evtmgr, renderer);
+  GameState* g = new RunningState(evtmgr, renderer);
   g->init();
-  return g;*/
+  return g;
 
  return this; 
 }
