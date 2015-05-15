@@ -1,19 +1,30 @@
 #include "ModelData.h"
 
 ModelData::ModelData(){
-  verticies = new VertexData();
-  uvs = new VertexData();
-  normals = new VertexData();
+  verticies = new VertexData<GLfloat>();
+  uvs = new VertexData<GLfloat>();
+  normals = new VertexData<GLfloat>();
+  colours = new VertexData<GLfloat>();
+  indices = new VertexData<GLuint>();
 }
 
-VertexData* ModelData::getVerticies(){
+VertexData<GLfloat>* ModelData::getVerticies(){
   return verticies;
 }
 
-VertexData* ModelData::getUVs(){
+VertexData<GLfloat>* ModelData::getUVs(){
   return uvs;
 }
 
-VertexData* ModelData::getNormals(){
+VertexData<GLfloat>* ModelData::getNormals(){
   return normals;
 }
+
+VertexData<GLfloat>* ModelData::getColours(){
+  return colours;
+}
+
+VertexData<GLuint>* ModelData::getIndices(){
+  return indices;
+}
+

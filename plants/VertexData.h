@@ -1,19 +1,23 @@
 #include <GL/glew.h>
 #include <algorithm>
+
+template<class T>
 class VertexData {
   private:
-    GLfloat* vertexData;
-    GLuint* vertexBuffer;
+    T* data;
+    GLuint* buffer;
     int size;
 
   public:
     VertexData();
     ~VertexData();
 
-    GLfloat* getVertexData();
-    GLuint* getVertexBuffer();
+    T* getData();
+    GLuint* getBuffer();
 
-    void setVertexData(GLfloat* vertexData, int size);
+    void setData(T* vertexData, int size);
     void refreshBuffer();
     int numVerts();
 };
+
+#include "VertexData.tpp"

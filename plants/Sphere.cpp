@@ -55,8 +55,8 @@ Sphere::Sphere(GLfloat detail){
     colourData[i+2] = glm::cos(i*i*M_PI/180);
   }
   std::cout << "Count: " << count << "\n";
-  getData()->setVertexData(verticies, count);
-  getColour()->setVertexData(colourData, count);
+  getModel()->getVerticies()->setData(verticies, count);
+  getModel()->getColours()->setData(colourData, count);
   angle = 0;
 }
 

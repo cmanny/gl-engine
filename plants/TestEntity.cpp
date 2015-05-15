@@ -7,7 +7,7 @@ TestEntity::TestEntity(){
      1.0f, -1.0f, 0.0f,
      0.0f,  1.0f, 0.0f,
     };
-    getData()->setVertexData(verticies, 9);
+    getModel()->getVerticies()->setData(verticies, 9);
     lastTime = glfwGetTime(); 
 }
 

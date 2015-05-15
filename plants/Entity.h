@@ -4,11 +4,11 @@
 #include <glm/glm.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
-#include "VertexData.h"
+#include "ModelData.h"
 
 class Entity {
   protected:
-    VertexData* data, *colourData;
+    ModelData* model;
     GLuint* shader;
     double x, y, z;
     double rotation;
@@ -22,13 +22,13 @@ class Entity {
     Entity();
     ~Entity();
     virtual void update(double delta) = 0;
-    VertexData* getData();
-    VertexData* getColour();
+    ModelData* getModel();
     void setShader(GLuint* shader);
     GLuint* getShader();
 
     void move(double,double,double);
     void rotate(float);
+    
     glm::mat4 getPos();
 
     double getX();

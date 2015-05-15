@@ -5,15 +5,20 @@
 
 class ModelData {
   private:
-    VertexData* verticies,
-              * uvs,
-              * normals;
+    VertexData<GLfloat>* verticies,
+                       * uvs,
+                       * normals,
+                       * colours;
+    VertexData<GLuint>* indices;
+
   public:
     ModelData();
 
-    VertexData* getVerticies();
-    VertexData* getUVs();
-    VertexData* getNormals();
+    VertexData<GLfloat>* getVerticies();
+    VertexData<GLfloat>* getUVs();
+    VertexData<GLfloat>* getNormals();
+    VertexData<GLfloat>* getColours();
+    VertexData<GLuint>* getIndices();
 };
 
 #endif

@@ -23,7 +23,7 @@ ButtonComponent::ButtonComponent(std::string text, int width, int height) : Comp
   verticies[15] = rightx;
   verticies[16] = bottomy;
 
-  getData()->setVertexData(verticies, 18);
+  getModel()->getVerticies()->setData(verticies, 18);
 }
 
 // Update

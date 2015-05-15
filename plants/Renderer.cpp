@@ -48,9 +48,6 @@ void Renderer::draw(){
 
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
-    if((*e)->getData()->getVertexData() == 0)
-      std::cout << "pointer fail";
-    
     mvp = projection * camera->view() * (*e)->getPos();
 
     
@@ -64,14 +61,14 @@ void Renderer::draw(){
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
 
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getData()->getVertexBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getVerticies()->getBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getColour()->getVertexBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getColours()->getBuffer());
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);    
 
-    glDrawArrays(GL_TRIANGLES, 0, (*e)->getData()->numVerts());    
+    glDrawArrays(GL_TRIANGLES, 0, (*e)->getModel()->getVerticies()->numVerts());    
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
   }
