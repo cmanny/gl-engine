@@ -15,7 +15,7 @@ class Entity {
     double angle;
 
   private:
-    glm::mat4 model;
+    glm::mat4 posMat;
     glm::vec3 rotationAxes;
     
   public:
@@ -29,7 +29,7 @@ class Entity {
 
     void move(double,double,double);
     void rotate(float);
-    glm::mat4 getModel();
+    glm::mat4 getPos();
 
     double getX();
     double getY();

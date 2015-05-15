@@ -51,7 +51,7 @@ void Renderer::draw(){
     if((*e)->getData()->getVertexData() == 0)
       std::cout << "pointer fail";
     
-    mvp = projection * camera->view() * (*e)->getModel();
+    mvp = projection * camera->view() * (*e)->getPos();
 
     
     GLuint* shader = (*e)->getShader();
