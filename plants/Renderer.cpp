@@ -29,6 +29,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   model = glm::mat4(1.0f);
   mvp = projection*view*model; 
   entities = new vector<Entity*>();
+
 } 
 // Set entity render list
 
@@ -45,20 +46,19 @@ void Renderer::draw(){
     return;
   }
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+  GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
     mvp = projection * camera->view() * (*e)->getPos();
-
-    
+    glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
     GLuint* shader = (*e)->getShader();
     if(*shader == 0) 
       shader = AssetManager::assets->DEFAULT_SHADER;
-
     GLuint mvpMatID = glGetUniformLocation(*shader, "MVP");
+    GLuint texture = (*e)->getModel()->getTexture();
+
     glUseProgram(*shader);
 
-    glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getVerticies()->getBuffer());

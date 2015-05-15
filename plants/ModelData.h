@@ -1,23 +1,28 @@
 #ifndef MODELDATA_H
 #define MODELDATA_H
 #include "VertexData.h"
-
+#include <string>
 
 class ModelData {
   private:
-    VertexData<GLfloat>* verticies,
-                       * uvs,
-                       * normals,
-                       * colours;
+    VertexData<glm::vec3>* verticies, * indexed_verticies,
+                         * normals, * indexed_normals,
+                         * colours, * indexed_colours;
+    VertexData<glm::vec2>* uvs;
     VertexData<GLuint>* indices;
+    GLuint textureID;
 
   public:
     ModelData();
 
-    VertexData<GLfloat>* getVerticies();
-    VertexData<GLfloat>* getUVs();
-    VertexData<GLfloat>* getNormals();
-    VertexData<GLfloat>* getColours();
+    void loadTexture(std::string);
+    GLuint getTexture();
+    void buildVBOIndex();
+
+    VertexData<glm::vec3>* getVerticies();
+    VertexData<glm::vec2>* getUVs();
+    VertexData<glm::vec3>* getNormals();
+    VertexData<glm::vec3>* getColours();
     VertexData<GLuint>* getIndices();
 };
 

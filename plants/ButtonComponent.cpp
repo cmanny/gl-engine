@@ -3,27 +3,16 @@
 // Constructor
 ButtonComponent::ButtonComponent(std::string text, int width, int height) : Component(width, height) {
   this->text = text;
-  GLfloat* verticies = new GLfloat[3*3*2*2];
-  verticies[2] = verticies[5] = verticies[8] = verticies[11] = verticies[14] = verticies[17] = 0; 
-  verticies[0] = leftx;
-  verticies[1] = topy;
+  vector<glm::vec3>* verticies = new vector<glm::vec3>();
+  
+  verticies->push_back(glm::vec3(leftx, topy, 0.0f)); 
+  verticies->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
+  verticies->push_back(glm::vec3(rightx, topy, 0.0f)); 
+  verticies->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
+  verticies->push_back(glm::vec3(rightx, topy, 0.0f)); 
+  verticies->push_back(glm::vec3(rightx, bottomy, 0.0f)); 
 
-  verticies[3] = leftx;
-  verticies[4] = bottomy;
-
-  verticies[6] = rightx;
-  verticies[7] = topy;
-
-  verticies[9] = verticies[3];
-  verticies[10] = verticies[4];
-
-  verticies[12] = verticies[6];
-  verticies[13] = verticies[7];
-
-  verticies[15] = rightx;
-  verticies[16] = bottomy;
-
-  getModel()->getVerticies()->setData(verticies, 18);
+  getModel()->getVerticies()->setData(verticies);
 }
 
 // Update

@@ -1,6 +1,7 @@
 // Constructor
-template<class T> VertexData<T>::VertexData() {
+template<class T> VertexData<T>::VertexData(int bufType) {
   buffer = new GLuint;
+  bufferType = bufType;
   data = 0;
 }
 
@@ -13,7 +14,7 @@ template<class T> VertexData<T>::~VertexData() {
 }
 
 // Get vertex data
-template<class T> T* VertexData<T>::getData() {
+template<class T> std::vector<T>* VertexData<T>::getData() {
   return data;
 }
 
@@ -23,25 +24,18 @@ template<class T> GLuint* VertexData<T>::getBuffer() {
 }
 
 // Set vertex data
-template<class T> void VertexData<T>::setData(T* data, int size) {
-  this->data = new T[size];
-  std::copy(data, data+size, this->data);
-  this->size = size;
+template<class T> void VertexData<T>::setData(std::vector<T>* data) {
+  this->data = data;
   refreshBuffer();
 }
 
 template<class T> int VertexData<T>::numVerts(){
-  return size/3;
+  return data->size();
 }
 
 // Rebuild vertex buffer
 template<class T> void VertexData<T>::refreshBuffer() {
-
-  // Generate & bind vertex buffer
   glGenBuffers(1, buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, *buffer);
-      
-  // Pass updated vertices to OpenGL.
-  glBufferData(GL_ARRAY_BUFFER, sizeof(T)*size, 
-      data, GL_STATIC_DRAW);
+  glBindBuffer(bufferType, *buffer); 
+  glBufferData(bufferType, sizeof(T)*data->size(), &data[0], GL_STATIC_DRAW);
 }

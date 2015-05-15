@@ -17,6 +17,6 @@ AssetManager::~AssetManager() {
 void AssetManager::loadAssets() {
   
   // Define default shader for all objects without a specified shader
- *DEFAULT_SHADER = LoadShaders( "shaders/TransformVertexShader.vertexshader", "shaders/ColorFragmentShader.fragmentshader" );
+ *DEFAULT_SHADER = LoadShaders( "shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader" );
 }
 
