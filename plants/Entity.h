@@ -28,6 +28,7 @@ class Entity {
 
     void move(double,double,double);
     void rotate(float);
+    void scale(float, float, float);
     
     glm::mat4 getPos();
 
