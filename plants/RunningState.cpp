@@ -17,13 +17,18 @@ void RunningState::init(){
   entities = new std::vector<Entity*>();
  
     Entity* earth = new Sphere(50, "images/earth.bmp"),
+          * mars2 = new Sphere(50, "images/mars.bmp"),
           * mars = new Sphere(50, "images/mars.bmp");
     mars->scale(0.5,0.5,0.5);
     mars->move(-5, 0, 0);
+    mars2->scale(3.0,3.0,3.0);
+    mars2->move(0,0,-4);
     //sphere->move(i + i % 11,i + i % 19,0);
     entities->push_back(earth);
+    entities->push_back(mars2);
     entities->push_back(mars);
     renderer->addEntity(earth);
+    renderer->addEntity(mars2);
     renderer->addEntity(mars);
 }
 
