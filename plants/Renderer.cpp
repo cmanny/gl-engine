@@ -11,7 +11,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   camera->init(0,0,64);
 
   // Dark blue background
-  glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
   // Setup VAO
   glGenVertexArrays(1, &VertexArrayID);
@@ -54,7 +54,6 @@ void Renderer::draw(){
   glUseProgram(programID);
   GLuint LightID, TextureID;
   if(programID){
-    std::cout << "using program id" << programID << "\n";
     LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -62,7 +61,6 @@ void Renderer::draw(){
   }
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
-    std::cout << "starting entity loop\n";
     mvp = projection * camera->view() * (*e)->getPos();
  
     GLuint texture = (*e)->getModel()->getTexture();
@@ -76,7 +74,7 @@ void Renderer::draw(){
     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
     glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
      
-    glm::vec3 lightPos = glm::vec3(2,0,4);
+    glm::vec3 lightPos = glm::vec3(-3,0,4);
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
     glActiveTexture(GL_TEXTURE0);
@@ -102,10 +100,6 @@ void Renderer::draw(){
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
-    std::cout << "\n" << (*e)->getModel()->getVertices()->numVerts() << " " <<
-               (*e)->getModel()->getUVs()->numVerts() << " " <<
-               (*e)->getModel()->getNormals()->numVerts() << " " <<
-               (*e)->getModel()->getIndices()->numVerts();
   }
 }
 

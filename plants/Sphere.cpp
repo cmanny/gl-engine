@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(GLfloat detail){
+Sphere::Sphere(GLfloat detail, std::string filepath){
   this->detail = detail;
 
   GLfloat width = 2048.0f, height = 1024.0f;
@@ -59,15 +59,10 @@ Sphere::Sphere(GLfloat detail){
     }
     uvY += incY; 
   }
-
-std::cout << "\n" << vertices->size() << " " <<
-               uvs->size() << " " <<
-               normals->size() << " ";
-
   getModel()->getVertices()->setData(vertices);
   getModel()->getUVs()->setData(uvs);
   getModel()->getNormals()->setData(normals);
-  getModel()->loadTexture("images/earth.bmp");
+  getModel()->loadTexture(filepath);
   getModel()->buildVBOIndex();
 
     angle = 0;

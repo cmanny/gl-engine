@@ -62,6 +62,12 @@ add_executable(plants
   ${plantSources}
   common/shader.cpp
   common/shader.hpp
+  common/texture.cpp
+  common/texture.hpp
+  common/vboindexer.hpp
+  common/vboindexer.cpp
+  common/objloader.hpp
+  common/objloader.cpp
   ${shaders}
 )
 

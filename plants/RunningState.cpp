@@ -16,12 +16,15 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 void RunningState::init(){
   entities = new std::vector<Entity*>();
  
-  for(int i = 50; i < 51; i++){ 
-    Entity* sphere = new Sphere(i);
+    Entity* earth = new Sphere(50, "images/earth.bmp"),
+          * mars = new Sphere(50, "images/mars.bmp");
+    mars->scale(0.5,0.5,0.5);
+    mars->move(-5, 0, 0);
     //sphere->move(i + i % 11,i + i % 19,0);
-    entities->push_back(sphere);
-    renderer->addEntity(sphere);
-  }
+    entities->push_back(earth);
+    entities->push_back(mars);
+    renderer->addEntity(earth);
+    renderer->addEntity(mars);
 }
 
 // Update game

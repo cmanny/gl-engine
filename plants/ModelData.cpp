@@ -1,8 +1,6 @@
 #include "ModelData.h"
 #include <common/texture.hpp>
 #include <common/vboindexer.hpp>
-#include <common/objloader.hpp>
-#include <iostream>
 
 ModelData::ModelData(){
   vertices = new VertexData<glm::vec3>(GL_ARRAY_BUFFER);
