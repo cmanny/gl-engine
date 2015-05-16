@@ -3,16 +3,16 @@
 // Constructor
 ButtonComponent::ButtonComponent(std::string text, int width, int height) : Component(width, height) {
   this->text = text;
-  vector<glm::vec3>* verticies = new vector<glm::vec3>();
+  std::vector<glm::vec3>* vertices = new std::vector<glm::vec3>();
   
-  verticies->push_back(glm::vec3(leftx, topy, 0.0f)); 
-  verticies->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
-  verticies->push_back(glm::vec3(rightx, topy, 0.0f)); 
-  verticies->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
-  verticies->push_back(glm::vec3(rightx, topy, 0.0f)); 
-  verticies->push_back(glm::vec3(rightx, bottomy, 0.0f)); 
+  vertices->push_back(glm::vec3(leftx, topy, 0.0f)); 
+  vertices->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
+  vertices->push_back(glm::vec3(rightx, topy, 0.0f)); 
+  vertices->push_back(glm::vec3(leftx, bottomy, 0.0f)); 
+  vertices->push_back(glm::vec3(rightx, topy, 0.0f)); 
+  vertices->push_back(glm::vec3(rightx, bottomy, 0.0f)); 
 
-  getModel()->getVerticies()->setData(verticies);
+  getModel()->getVertices()->setData(vertices);
 }
 
 // Update

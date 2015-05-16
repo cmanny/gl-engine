@@ -5,7 +5,7 @@ Entity::Entity() {
   std::cout << "new vertex data\n";
   model = new ModelData();
   posMat = glm::mat4(1.0f);
-  rotationAxes = glm::vec3(1.0f,0.0f,1.0f);
+  rotationAxes = glm::vec3(1.0f,1.0f,1.0f);
   x = y = z = rotation = 0;
   shader = new GLuint;
   *shader = 0;

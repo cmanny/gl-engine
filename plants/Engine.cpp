@@ -21,24 +21,19 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   frameRate = _frameRate;
   title = _title;
   fullscreen = false;
-
   // Instantiate renderer instanc
   cout << "Starting Engine.\n";
   running = true; 
-
   // Initialise GLFW
   if(!glfwInit()) {
     cerr << "Error initializing GLFW.\n";
     exit(-1);
   }
-
   // Set OpenGL Window hints
-
+glfwWindowHint(GLFW_SAMPLES, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
-
   // Open a window and create its OpenGL context 
   window = glfwCreateWindow( width, height, title.c_str(), NULL, NULL);
   if( window == NULL ){
@@ -46,16 +41,13 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
       glfwTerminate();
       exit(-1);
   }
-  
-  
   // Initialise GLEW
   glfwMakeContextCurrent(window); 
   glewExperimental=true; // Needed in core profile
   if (glewInit() != GLEW_OK) {
     fprintf(stderr, "Error initializing GLEW.\n");
     exit(-1);
-  }
-  
+  }  
   const GLFWvidmode* desktopMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
   desktopHeight = desktopMode->height;
   desktopWidth = desktopMode->width;
@@ -65,7 +57,9 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   
   // Additional setup of other components
   evtmgr = new EventManager(window);
+
   renderer = new Renderer(window, evtmgr, width, height);
+  
 }
 
 void Engine::callback(Event evt){

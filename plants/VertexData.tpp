@@ -26,7 +26,6 @@ template<class T> GLuint* VertexData<T>::getBuffer() {
 // Set vertex data
 template<class T> void VertexData<T>::setData(std::vector<T>* data) {
   this->data = data;
-  refreshBuffer();
 }
 
 template<class T> int VertexData<T>::numVerts(){
@@ -37,5 +36,5 @@ template<class T> int VertexData<T>::numVerts(){
 template<class T> void VertexData<T>::refreshBuffer() {
   glGenBuffers(1, buffer);
   glBindBuffer(bufferType, *buffer); 
-  glBufferData(bufferType, sizeof(T)*data->size(), &data[0], GL_STATIC_DRAW);
+  glBufferData(bufferType, sizeof(T)*data->size(), &(*data)[0], GL_STATIC_DRAW);
 }

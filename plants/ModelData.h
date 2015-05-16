@@ -2,14 +2,15 @@
 #define MODELDATA_H
 #include "VertexData.h"
 #include <string>
+#include <glm/glm.hpp>
 
 class ModelData {
   private:
-    VertexData<glm::vec3>* verticies, * indexed_verticies,
+    VertexData<glm::vec3>* vertices, * indexed_vertices,
                          * normals, * indexed_normals,
                          * colours, * indexed_colours;
     VertexData<glm::vec2>* uvs;
-    VertexData<GLuint>* indices;
+    VertexData<unsigned short>* indices;
     GLuint textureID;
 
   public:
@@ -19,11 +20,11 @@ class ModelData {
     GLuint getTexture();
     void buildVBOIndex();
 
-    VertexData<glm::vec3>* getVerticies();
+    VertexData<glm::vec3>* getVertices();
     VertexData<glm::vec2>* getUVs();
     VertexData<glm::vec3>* getNormals();
     VertexData<glm::vec3>* getColours();
-    VertexData<GLuint>* getIndices();
+    VertexData<unsigned short>* getIndices();
 };
 
 #endif

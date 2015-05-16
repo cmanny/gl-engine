@@ -18,6 +18,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   glBindVertexArray(VertexArrayID); 
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
+  glEnable(GL_CULL_FACE);
   // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
   view = glm::lookAt(
@@ -30,7 +31,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   mvp = projection*view*model; 
   entities = new vector<Entity*>();
 
-} 
+  } 
 // Set entity render list
 
 // Add entity
@@ -45,34 +46,67 @@ void Renderer::draw(){
     std::cout << "Entities not initialised";
     return;
   }
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
+  if(entities->size() == 0){
+    return;
+  }
+  GLuint programID = *AssetManager::assets->DEFAULT_SHADER;
+
+  glUseProgram(programID);
+  GLuint LightID, TextureID;
+  if(programID){
+    std::cout << "using program id" << programID << "\n";
+    LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    TextureID  = glGetUniformLocation(programID, "myTextureSampler");
+  }
   // Enable drawing of vertex arrays
   for(auto e = entities->begin(); e != entities->end(); e++){
+    std::cout << "starting entity loop\n";
     mvp = projection * camera->view() * (*e)->getPos();
-    glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
-    GLuint* shader = (*e)->getShader();
-    if(*shader == 0) 
-      shader = AssetManager::assets->DEFAULT_SHADER;
-    GLuint mvpMatID = glGetUniformLocation(*shader, "MVP");
+ 
     GLuint texture = (*e)->getModel()->getTexture();
 
-    glUseProgram(*shader);
-
+    glUseProgram(programID);
+    GLuint mvpMatID = glGetUniformLocation(programID, "MVP");
+    GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
+    GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+    
+    glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
+    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
+    glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
+     
+    glm::vec3 lightPos = glm::vec3(2,0,4);
+    glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(TextureID, 0);
 
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getVerticies()->getBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getVertices()->getBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getColours()->getBuffer());
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);    
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getUVs()->getBuffer());
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);    
+    
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getNormals()->getBuffer());
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-    glDrawArrays(GL_TRIANGLES, 0, (*e)->getModel()->getVerticies()->numVerts());    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *(*e)->getModel()->getIndices()->getBuffer());
+
+    glDrawElements(GL_TRIANGLES, (*e)->getModel()->getIndices()->numVerts(), GL_UNSIGNED_SHORT, (void*)0); 
+    
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    std::cout << "\n" << (*e)->getModel()->getVertices()->numVerts() << " " <<
+               (*e)->getModel()->getUVs()->numVerts() << " " <<
+               (*e)->getModel()->getNormals()->numVerts() << " " <<
+               (*e)->getModel()->getIndices()->numVerts();
   }
-
 }
 
 // Return camera instance
