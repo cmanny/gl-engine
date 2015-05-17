@@ -16,7 +16,7 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 void RunningState::init(){
   entities = new std::vector<Entity*>();
  
-    Entity* earth = new Sphere(50, "images/earth.bmp"),
+    Entity* earth = new Sphere(10, "images/earth.bmp"),
           * mars2 = new Sphere(50, "images/mars.bmp"),
           * mars = new Sphere(50, "images/mars.bmp");
     mars->scale(0.5,0.5,0.5);
