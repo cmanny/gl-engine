@@ -1,22 +1,23 @@
 #include "Sphere.h"
+#include <glm/gtx/compatibility.hpp>
+
+glm::vec2 makeUV(GLfloat x, GLfloat y, GLfloat z){
+  return glm::vec2( 0.5 + glm::atan2(y,x)/(M_PI*2), 0.5 - glm::asin(z)/M_PI);
+}
 
 Sphere::Sphere(GLfloat detail, std::string filepath){
   this->detail = detail;
 
   GLfloat width = 2048.0f, height = 1024.0f;
-  GLfloat incX = 1.0f / detail, incY = 1.0f / detail;
-  GLfloat uvX = 0.0f, uvY = 0.0f;
   std::vector<glm::vec3>* vertices = new std::vector<glm::vec3>();
   std::vector<glm::vec2>* uvs = new std::vector<glm::vec2>();
   std::vector<glm::vec3>* normals = new std::vector<glm::vec3>();
   GLfloat zc = 0, yc = 0, xc= 0, angInc = 2*M_PI/detail;
-  GLfloat decrement = 1.0f/detail;
   for(GLfloat angZ = 0.0f; angZ < M_PI; angZ += angInc){
     zc = glm::cos(angZ);
     GLfloat nextZc = glm::cos(angZ + angInc);
     GLfloat nextR = glm::sqrt(1 - nextZc*nextZc);
     GLfloat r = glm::sqrt(1- zc*zc);
-    uvX = 0.0f;
     for(GLfloat ang = 0.0f; ang < 2*M_PI; ang += angInc){
       GLfloat yc = r*glm::sin(ang);
       GLfloat xc = r*glm::cos(ang);
@@ -31,9 +32,9 @@ Sphere::Sphere(GLfloat detail, std::string filepath){
       vertices->push_back(glm::vec3(leftXc, leftYc, nextZc));
       vertices->push_back(glm::vec3(rightXc, rightYc, nextZc));
       //1st uvs
-      uvs->push_back(glm::vec2(uvX, uvY));
-      uvs->push_back(glm::vec2(uvX, uvY + incY));
-      uvs->push_back(glm::vec2(uvX + incX, uvY + incY)); 
+      uvs->push_back(makeUV(xc, yc, zc));
+      uvs->push_back(makeUV(leftXc, leftYc, nextZc));
+      uvs->push_back(makeUV(rightXc, rightYc, nextZc));
       //1st normals
       normals->push_back(glm::normalize(glm::vec3(xc, yc, zc)));
       normals->push_back(glm::normalize(glm::vec3(leftXc, leftYc, nextZc)));
@@ -44,28 +45,21 @@ Sphere::Sphere(GLfloat detail, std::string filepath){
       vertices->push_back(glm::vec3(rightXc, rightYc, nextZc));
       vertices->push_back(glm::vec3(nextXc, nextYc, zc));
       //2nd uvs
-      uvs->push_back(glm::vec2(uvX, uvY));
-      uvs->push_back(glm::vec2(uvX + incX, uvY + incY));
-      uvs->push_back(glm::vec2(uvX + incX, uvY)); 
+      uvs->push_back(makeUV(xc, yc, zc));
+      uvs->push_back(makeUV(rightXc, rightYc, nextZc));
+      uvs->push_back(makeUV(nextXc, nextYc, zc));
       
       normals->push_back(glm::normalize(glm::vec3(xc, yc, zc)));
       normals->push_back(glm::normalize(glm::vec3(rightXc, rightYc, nextZc)));
       normals->push_back(glm::normalize(glm::vec3(nextXc, nextYc, zc)));
-
-
-//      std::cout << uvX << " " << uvY << " " << "\n";
-
-      uvX += incX; 
     }
-    uvY += incY; 
   }
   getModel()->getVertices()->setData(vertices);
   getModel()->getUVs()->setData(uvs);
   getModel()->getNormals()->setData(normals);
   getModel()->loadTexture(filepath);
   getModel()->buildVBOIndex();
-
-    angle = 0;
+  angle = 0;
 }
 
 void Sphere::update(double delta){
