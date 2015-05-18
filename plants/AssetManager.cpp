@@ -5,7 +5,6 @@ AssetManager* AssetManager::assets = new AssetManager();
 
 // Constructor
 AssetManager::AssetManager() {
-  DEFAULT_SHADER = new GLuint; 
 }
 
 // Destructor
@@ -17,6 +16,6 @@ AssetManager::~AssetManager() {
 void AssetManager::loadAssets() {
   
   // Define default shader for all objects without a specified shader
- *DEFAULT_SHADER = LoadShaders( "shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader" );
+ DEFAULT_SHADER = LoadShaders( "shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader" );
 }
 

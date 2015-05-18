@@ -7,14 +7,12 @@ Entity::Entity() {
   posMat = glm::mat4(1.0f);
   rotationAxes = glm::vec3(1.0f,1.0f,1.0f);
   x = y = z = rotation = 0;
-  shader = new GLuint;
-  *shader = 0;
+  shader = -1;
 }
 
 // Destructor
 Entity::~Entity() {
   delete model;
-  delete shader;
 }
 
 ModelData* Entity::getModel(){
@@ -41,11 +39,11 @@ glm::mat4 Entity::getPos(){
   return posMat;
 }
 
-void Entity::setShader(GLuint* shader) {
+void Entity::setShader(GLuint shader) {
   this->shader = shader;
 }
 
-GLuint* Entity::getShader() {
+GLuint Entity::getShader() {
   return shader;
 }
 

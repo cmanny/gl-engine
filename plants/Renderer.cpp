@@ -42,30 +42,18 @@ void Renderer::addEntity(Entity* entity) {
 // Render entities
 void Renderer::draw(){
   // Clear the screen
-  if(entities == 0){
-    std::cout << "Entities not initialised";
-    return;
-  }
-  if(entities->size() == 0){
-    return;
-  }
-  GLuint programID = *AssetManager::assets->DEFAULT_SHADER;
-
-  glUseProgram(programID);
-  GLuint LightID, TextureID;
-  if(programID){
-    LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
-
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    TextureID  = glGetUniformLocation(programID, "myTextureSampler");
-  }
-  // Enable drawing of vertex arrays
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   for(auto e = entities->begin(); e != entities->end(); e++){
-    mvp = projection * camera->view() * (*e)->getPos();
- 
-    GLuint texture = (*e)->getModel()->getTexture();
 
+    GLuint LightID, TextureID, programID;
+    programID = (*e)->getShader();
+    if(programID == -1)
+      programID = AssetManager::assets->DEFAULT_SHADER;
     glUseProgram(programID);
+    LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+    TextureID  = glGetUniformLocation(programID, "myTextureSampler"); 
+
+    mvp = projection * camera->view() * (*e)->getPos();
     GLuint mvpMatID = glGetUniformLocation(programID, "MVP");
     GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
     GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
@@ -77,8 +65,9 @@ void Renderer::draw(){
     glm::vec3 lightPos = glm::vec3(0,16,16);
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
+    GLuint texture = (*e)->getModel()->getTexture();
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, (*e)->getModel()->getTexture());
     glUniform1i(TextureID, 0);
 
     glEnableVertexAttribArray(0);

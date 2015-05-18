@@ -9,7 +9,7 @@
 class Entity {
   protected:
     ModelData* model;
-    GLuint* shader;
+    GLuint shader;
     double x, y, z;
     double rotation;
     double angle;
@@ -23,8 +23,8 @@ class Entity {
     ~Entity();
     virtual void update(double delta) = 0;
     ModelData* getModel();
-    void setShader(GLuint* shader);
-    GLuint* getShader();
+    void setShader(GLuint shader);
+    GLuint getShader();
 
     void move(double,double,double);
     void rotate(float);
