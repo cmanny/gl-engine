@@ -27,6 +27,12 @@ Sphere::Sphere(GLfloat detail, std::string filepath){
       GLfloat rightXc = nextR*glm::cos(ang + angInc);
       GLfloat nextYc = r*glm::sin(ang + angInc);
       GLfloat nextXc = r*glm::cos(ang + angInc);
+
+      //Make sure the bridge between +PI and -PI is handled
+      if(nextYc <= 0 && yc > 0){
+        nextYc = 0+(1.0/(1<<(sizeof(GLfloat)*8-2)));
+        rightYc = nextYc;
+      }
       //1st vertices
       vertices->push_back(glm::vec3(xc, yc, zc));
       vertices->push_back(glm::vec3(leftXc, leftYc, nextZc));
@@ -63,7 +69,7 @@ Sphere::Sphere(GLfloat detail, std::string filepath){
 }
 
 void Sphere::update(double delta){
-  rotate(1);
+  rotate(0.1);
   //move(0.1*glm::cos(angle),0.1*glm::sin(angle),0.1*glm::cos(angle));
   angle += M_PI*2/256;
 }
