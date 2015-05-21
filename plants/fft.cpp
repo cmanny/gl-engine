@@ -3,10 +3,11 @@
 FFT::FFT() {
 }
 
-complex* transform(complex* values, int n){
+complex<double>* transform(complex* values, int n, bool inverse){
   if(n == 1)
     return values;
   complex<double> wN = exp(0.0, 2*M_PI/(double)n);
+  if(inverse) wN = 1.0f/wN;
   complex<double> w(1.0, 0.0);
   complex<double> a0[] = new complex<double>[n/2];
   complex<double> a1[] = new complex<double>[n/2];
@@ -14,8 +15,8 @@ complex* transform(complex* values, int n){
     a0[i] = values[i*2];
     a1[i] = values[i*2 + 1];
   }
-  complex<double> y0[] = transform(a0, n/2);
-  complex<double> y1[] = transform(a1, n/2);
+  complex<double> y0[] = transform(a0, n/2, inverse);
+  complex<double> y1[] = transform(a1, n/2, inverse);
   complex<double> y[] = new complex<double>[n];
   for(int k = 0; k < (n/2); k++){
     y[k] = y0[k] + w*y1[k];
@@ -25,4 +26,6 @@ complex* transform(complex* values, int n){
   return y;
 }
 
-complex* inverseTransform(){ }
+complex<double>* inverseTransform(complex<double>* values, int n){
+  return transform(values, n, true);
+}

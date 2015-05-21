@@ -8,8 +8,8 @@ class FFT {
     int n;
   public:
     FFT(int n);
-    complex* transform(complex* values);
-    complex* inverseTransform(complex* values);
+    complex<double>* transform(complex* values, int n, bool inverse);
+    complex<double>* inverseTransform(complex* values, int n);
 };
 
 #endif FFT_H
