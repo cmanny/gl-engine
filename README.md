@@ -1,6 +1,10 @@
 
 # Plants
 
+Plants attempts to be a realistic and attractive simulation of bacteria and viruses taking over the universe. Currently we are working towards fast terrain generation, deformation and realistic plant life-cycle. We can construct a beautiful landscape with mountains and deers and deers. 
+
+We are trying to build the project for Linux and Windows systems at the moment.
+
 ## Instructions to build
 
 First ensure you have the following libraries:
