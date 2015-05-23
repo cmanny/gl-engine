@@ -1,5 +1,6 @@
 
 #include "RunningState.h"
+#include "Terrain.h"
 #include "Scene.h"
 #include "TestEntity.h"
 #include "Sphere.h"
@@ -14,11 +15,15 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 }
 
 void RunningState::init(){
+  
+  Terrain* terrain = new Terrain(50, 50, "images/grass.bmp");
+  terrain->generate(8);
+
   entities = new std::vector<Entity*>();
  
     Entity* earth = new Sphere(50, "images/earth.bmp"),
           * mars2 = new Sphere(50, "images/mars.bmp"),
-          * mars = new Sphere(50, "images/mars.bmp");
+          * mars = new Sphere(50, "images/grass.bmp");
     mars->scale(0.5,0.5,0.5);
     mars->move(-5, 0, 0);
     mars2->scale(3.0,3.0,3.0);
