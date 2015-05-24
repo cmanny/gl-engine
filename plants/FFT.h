@@ -6,11 +6,19 @@ typedef std::complex<double> Complex;
 
 class FFT {
   private:
-    int n;
+    unsigned int N,
+                 logN,
+                 side,
+                 * reverse;
+    Complex** wN,
+           ** _wN;
+    Complex* vals[2];
   public:
-    FFT(int n);
-    Complex* transform(Complex* values, int n, bool inverse);
-    Complex* inverseTransform(Complex* values, int n);
+    FFT(int);
+    ~FFT();
+    unsigned int reverseBits(unsigned int);
+    Complex makeWn(double, double);
+    void transform(Complex*,Complex*,int,int,bool);
 };
 
 #endif

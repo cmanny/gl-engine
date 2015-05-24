@@ -20,6 +20,7 @@ class Terrain : public Entity {
     Terrain(GLfloat w,GLfloat h, std::string texture);
     void generate(int);
     void update(double){};
+    void printMesh(Complex*, int);
 };
 
 #endif /* TERRAIN_H */
