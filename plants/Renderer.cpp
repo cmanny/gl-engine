@@ -62,7 +62,7 @@ void Renderer::draw(){
     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
     glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
      
-    glm::vec3 lightPos = glm::vec3(0,16,16);
+    glm::vec3 lightPos = glm::vec3(16,16,32);
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
     GLuint texture = (*e)->getModel()->getTexture();

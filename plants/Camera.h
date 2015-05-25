@@ -12,7 +12,7 @@ class Camera {
         centreX, centreY, centreZ,
         moveVelX, moveVelY, moveVelZ;
     
-    bool moveNorth, moveEast, moveSouth, moveWest;    
+    bool moveNorth, moveEast, moveSouth, moveWest, rotNorth, rotSouth;
     EventManager* evtmgr;
     
     void scrollCallback(Event);
@@ -20,6 +20,7 @@ class Camera {
 
   public:
     Camera(EventManager* evtmgr);
+    glm::vec3 getPos();
     void init(int,int,int);
     void update(double delta);
     glm::mat4 view();

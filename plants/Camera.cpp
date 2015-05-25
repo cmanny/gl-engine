@@ -15,7 +15,7 @@ void Camera::init(int x, int y, int z){
   eyeZ = z;
   centreZ = 0;
   moveVelX = moveVelY = moveVelZ = 0;
-  moveNorth = moveEast = moveSouth = moveWest = false;
+  moveNorth = moveEast = moveSouth = moveWest = rotNorth = rotSouth = false;
 }
 
 glm::mat4 Camera::view(){
@@ -26,6 +26,9 @@ glm::mat4 Camera::view(){
     );
 }
 
+glm::vec3 Camera::getPos(){
+  return glm::vec3(eyeX, eyeY, eyeZ);
+}
 void Camera::scrollCallback(Event evt){
   eyeZ += evt.data[1];
 }
@@ -44,6 +47,8 @@ void Camera::keyCallback(Event evt){
         case GLFW_KEY_D: moveEast= true; break;
         case GLFW_KEY_W: moveNorth = true; break;
         case GLFW_KEY_S: moveSouth = true; break;
+        case GLFW_KEY_E: rotSouth = true; break;
+        case GLFW_KEY_Q: rotNorth = true; break;
       }
     break;
     
@@ -52,6 +57,8 @@ void Camera::keyCallback(Event evt){
         case GLFW_KEY_A: moveWest = false; break;
         case GLFW_KEY_D: moveEast= false; break;
         case GLFW_KEY_W: moveNorth = false; break;
+        case GLFW_KEY_E: rotSouth = false; break;
+        case GLFW_KEY_Q: rotNorth = false; break;
         case GLFW_KEY_S: moveSouth = false; break;
       }
     break;

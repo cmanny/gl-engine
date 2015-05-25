@@ -16,12 +16,12 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 
 void RunningState::init(){
   
-  Terrain* terrain = new Terrain(50, 50, "images/grass.bmp");
-  terrain->generate(8);
+  Terrain* terrain = new Terrain(32, 32, "images/grass.bmp");
+  terrain->generate(128);
 
   entities = new std::vector<Entity*>();
  
-    Entity* earth = new Sphere(50, "images/earth.bmp"),
+/*    Entity* earth = new Sphere(50, "images/earth.bmp"),
           * mars2 = new Sphere(50, "images/mars.bmp"),
           * mars = new Sphere(50, "images/grass.bmp");
     mars->scale(0.5,0.5,0.5);
@@ -34,7 +34,10 @@ void RunningState::init(){
     entities->push_back(mars);
     renderer->addEntity(earth);
     renderer->addEntity(mars2);
-    renderer->addEntity(mars);
+    renderer->addEntity(mars);*/
+
+  entities->push_back(terrain);
+  renderer->addEntity(terrain);
 }
 
 // Update game
