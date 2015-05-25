@@ -20,7 +20,8 @@ void RunningState::init(){
   terrain->generate(128);
 
   entities = new std::vector<Entity*>();
- 
+  Entity* earth = new Sphere(50, "images/earth.bmp");
+  earth->move(16,16,32);
 /*    Entity* earth = new Sphere(50, "images/earth.bmp"),
           * mars2 = new Sphere(50, "images/mars.bmp"),
           * mars = new Sphere(50, "images/grass.bmp");
@@ -36,6 +37,8 @@ void RunningState::init(){
     renderer->addEntity(mars2);
     renderer->addEntity(mars);*/
 
+  entities->push_back(earth);
+  renderer->addEntity(earth);
   entities->push_back(terrain);
   renderer->addEntity(terrain);
 }
