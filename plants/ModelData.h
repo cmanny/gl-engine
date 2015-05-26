@@ -10,7 +10,7 @@ class ModelData {
                          * normals, * indexed_normals,
                          * colours, * indexed_colours;
     VertexData<glm::vec2>* uvs;
-    VertexData<unsigned short>* indices;
+    VertexData<unsigned int>* indices;
     GLuint textureID;
 
   public:
@@ -24,7 +24,7 @@ class ModelData {
     VertexData<glm::vec2>* getUVs();
     VertexData<glm::vec3>* getNormals();
     VertexData<glm::vec3>* getColours();
-    VertexData<unsigned short>* getIndices();
+    VertexData<unsigned int>* getIndices();
 };
 
 #endif

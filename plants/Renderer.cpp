@@ -8,7 +8,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   this->window = w;  
   camera = new Camera(evtmgr);
-  camera->init(32,32,200);
+  camera->init(64,64,200);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -62,7 +62,7 @@ void Renderer::draw(){
     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
     glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
      
-    glm::vec3 lightPos = glm::vec3(32,0,16);;
+    glm::vec3 lightPos = glm::vec3(64,64,32);;
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
     GLuint texture = (*e)->getModel()->getTexture();
@@ -84,7 +84,7 @@ void Renderer::draw(){
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *(*e)->getModel()->getIndices()->getBuffer());
 
-    glDrawElements(GL_TRIANGLES, (*e)->getModel()->getIndices()->numVerts(), GL_UNSIGNED_SHORT, (void*)0); 
+    glDrawElements(GL_TRIANGLES, (*e)->getModel()->getIndices()->numVerts(), GL_UNSIGNED_INT, (void*)0); 
     
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

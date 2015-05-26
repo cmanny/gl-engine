@@ -7,14 +7,14 @@ ModelData::ModelData(){
   uvs = new VertexData<glm::vec2>(GL_ARRAY_BUFFER);
   normals = new VertexData<glm::vec3>(GL_ARRAY_BUFFER);
   colours = new VertexData<glm::vec3>(GL_ARRAY_BUFFER);
-  indices = new VertexData<unsigned short>(GL_ELEMENT_ARRAY_BUFFER);
+  indices = new VertexData<unsigned int>(GL_ELEMENT_ARRAY_BUFFER);
 }
 
 void ModelData::buildVBOIndex(){
   std::vector<glm::vec3>* indexed_vertices = new std::vector<glm::vec3>();
   std::vector<glm::vec2>* indexed_uvs = new std::vector<glm::vec2>();
   std::vector<glm::vec3>* indexed_normals = new std::vector<glm::vec3>();
-  indices->setData(new std::vector<unsigned short>());
+  indices->setData(new std::vector<unsigned int>());
   
   indexVBO(*vertices->getData(), 
           *uvs->getData(), 
@@ -58,7 +58,7 @@ VertexData<glm::vec3>* ModelData::getColours(){
   return colours;
 }
 
-VertexData<unsigned short>* ModelData::getIndices(){
+VertexData<unsigned int>* ModelData::getIndices(){
   return indices;
 }
 
