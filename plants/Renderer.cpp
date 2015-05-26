@@ -8,7 +8,7 @@ Renderer::Renderer(GLFWwindow* w,EventManager* evtmgr, int scrW, int scrH){
   this->screenH = scrH;
   this->window = w;  
   camera = new Camera(evtmgr);
-  camera->init(16,16,64);
+  camera->init(32,32,200);
 
   // Dark blue background
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -62,7 +62,7 @@ void Renderer::draw(){
     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
     glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
      
-    glm::vec3 lightPos = camera->getPos();
+    glm::vec3 lightPos = glm::vec3(32,0,16);;
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
     GLuint texture = (*e)->getModel()->getTexture();

@@ -27,12 +27,12 @@ void Terrain::generate(int N){
       int i = y * N + x;
       double f = sqrt((x-N/2)/float(N) * (x-N/2)/float(N) + (y-N/2)/float(N) * (y-N/2)/float(N));
       f = f < 1.0f/N ? 1.0f / N : f;
-      hmap[i] *= 1.0f/pow(f, 2);
+      hmap[i] *= 1.0f/pow(f, 1.5);
     }
   }
   for(int i = 0; i < N; i++) fft.transform(hmap, hmap, 1, i*N, true); //rows
   for(int i = 0; i < N; i++) fft.transform(hmap, hmap, N, i, true); //columns 
-  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*10,0.0);
+  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2],0.0);
 
   for(int y = 0; y < N-1; y++){
     for(int x = 0; x < N-1; x++){
@@ -46,10 +46,11 @@ void Terrain::generate(int N){
       glm::vec3 midEdge = glm::vec3(xc+dx, yc+dy, hmap[i + N + 1].real()) - glm::vec3(xc,yc,hmap[i].real());
       glm::vec3 horEdge = glm::vec3(xc+dx, yc, hmap[i+1].real()) - glm::vec3(xc,yc,hmap[i].real());
       glm::vec3 t1Norm = glm::normalize(glm::cross( horEdge, midEdge));
-
-      uvs->push_back(glm::vec2(0,0));
-      uvs->push_back(glm::vec2(0,1));
-      uvs->push_back(glm::vec2(1,1));
+      t1Norm = glm::normalize(glm::vec3(t1Norm.x, t1Norm.y, 1));
+      //for(int i = 0; i < 3; i++) normals->push_back(t1Norm);
+      uvs->push_back(glm::vec2(xc/N,yc/N));
+      uvs->push_back(glm::vec2((xc+dx)/N,(yc)/N));
+      uvs->push_back(glm::vec2((xc+dx)/N,(yc+dy)/N));
 
       vertices->push_back(glm::vec3(xc, yc, hmap[i].real()));
       vertices->push_back(glm::vec3(xc+dx, yc+dy, hmap[i + N + 1].real()));
@@ -57,12 +58,13 @@ void Terrain::generate(int N){
 
       glm::vec3 vertEdge = glm::vec3(xc, yc + dy, hmap[i + N].real()) - glm::vec3(xc, yc, hmap[i].real());
 
-      glm::vec3 t2Norm = glm::normalize(glm::cross(vertEdge, midEdge));
-      
-      uvs->push_back(glm::vec2(0,0));
-      uvs->push_back(glm::vec2(1,0));
-      uvs->push_back(glm::vec2(1,1));
-      
+      glm::vec3 t2Norm = glm::cross(vertEdge, midEdge);
+      t2Norm = glm::normalize(glm::vec3(t2Norm.x, t2Norm.y, 1));
+      //for(int i = 0; i < 3; i++) normals->push_back(t2Norm);
+       
+      uvs->push_back(glm::vec2(xc/N,yc/N));
+      uvs->push_back(glm::vec2((xc+dx)/N,(yc+dy)/N));
+      uvs->push_back(glm::vec2((xc)/N,(yc+dy)/N));
       normalMesh[i] += t1Norm + t2Norm;
       normalMesh[i+1] += t1Norm;
       normalMesh[i+ N + 1] += t1Norm + t2Norm;
@@ -88,6 +90,9 @@ void Terrain::generate(int N){
       normals->push_back(normalMesh[i+N+1]); 
       normals->push_back(normalMesh[i+N]);
     }
+  }
+  for(int i = 0; i < 3*6*N; i++){
+    std::cout << "{" << vertices->at(i).x << " " << vertices->at(i).y << "} ";
   }
   getModel()->getVertices()->setData(vertices);
   getModel()->getNormals()->setData(normals);
