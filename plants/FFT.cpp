@@ -76,37 +76,14 @@ void FFT::transform(Complex* input, Complex* output, int stride, int offset, boo
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Assumes a square input
+void FFT::lowpass2(Complex* input, float beta, int N){
+  for(int y = 0; y < N; y++){
+    for(int x = 0; x < N; x++){
+      int i = y * N + x;
+      double f = sqrt((x-N/2)/float(N) * (x-N/2)/float(N) + (y-N/2)/float(N) * (y-N/2)/float(N));
+      f = f < 1.0f/N ? 1.0f / N : f;
+      input[i] *= 1.0f/pow(f, 1.8);
+    }
+  }
+}

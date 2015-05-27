@@ -19,6 +19,7 @@ class FFT {
     unsigned int reverseBits(unsigned int);
     Complex makeWn(double, double);
     void transform(Complex*,Complex*,int,int,bool);
+    void lowpass2(Complex*, float, int);
 };
 
 #endif
