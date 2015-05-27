@@ -87,3 +87,13 @@ void FFT::lowpass2(Complex* input, float beta, int N){
     }
   }
 }
+
+void FFT::fft2(Complex* input, Complex* output, int N){
+  for(int i = 0; i < N; i++) transform(input, output, 1, i*N, false); //rows
+  for(int i = 0; i < N; i++) transform(input, output, N, i, false); //columns 
+}
+
+void FFT::ifft2(Complex* input, Complex* output, int N){
+  for(int i = 0; i < N; i++) transform(input, output, 1, i*N, true); //rows
+  for(int i = 0; i < N; i++) transform(input, output, N, i, true); //columns 
+}

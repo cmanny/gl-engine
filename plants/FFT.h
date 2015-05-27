@@ -20,6 +20,8 @@ class FFT {
     Complex makeWn(double, double);
     void transform(Complex*,Complex*,int,int,bool);
     void lowpass2(Complex*, float, int);
+    void fft2(Complex*, Complex*, int);
+    void ifft2(Complex*, Complex*, int);
 };
 
 #endif

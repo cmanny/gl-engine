@@ -19,12 +19,10 @@ void Terrain::generate(int N){
   
   for(int i = 0; i < N*N; i++) hmap[i] = Complex( (double)i/(N*N)*((double) rand() / RAND_MAX) , 0.0); 
   FFT fft(N);
-  for(int i = 0; i < N; i++) fft.transform(hmap, hmap, 1, i*N, false); //rows
-  for(int i = 0; i < N; i++) fft.transform(hmap, hmap, N, i, false); //columns 
   //Apply filter in the frequency domain
-  fft.lowpass2(hmap, 1.8, N); 
-  for(int i = 0; i < N; i++) fft.transform(hmap, hmap, 1, i*N, true); //rows
-  for(int i = 0; i < N; i++) fft.transform(hmap, hmap, N, i, true); //columns 
+  fft.fft2(hmap, hmap, N);
+  fft.lowpass2(hmap, 1.9, N);
+  fft.ifft2(hmap, hmap, N);
   for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*10,0.0);
 
   for(int y = 0; y < N-1; y++){
@@ -54,9 +52,9 @@ void Terrain::generate(int N){
       glm::vec3 t2Norm = glm::cross(midEdge, vertEdge);
       t2Norm = glm::normalize(glm::vec3(t2Norm.x, t2Norm.y, 1));
       //for(int i = 0; i < 3; i++) normals->push_back(t2Norm);
-       uvs->push_back(glm::vec2(0,0));
-       uvs->push_back(glm::vec2(0,1));
-       uvs->push_back(glm::vec2(1,1));
+      uvs->push_back(glm::vec2(0,0));
+      uvs->push_back(glm::vec2(0,1));
+      uvs->push_back(glm::vec2(1,1));
        
       normalMesh[i] += t1Norm + t2Norm;
       normalMesh[i+1] += t1Norm;
