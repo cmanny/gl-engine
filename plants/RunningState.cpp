@@ -17,7 +17,7 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 void RunningState::init(){
   
   Terrain* terrain = new Terrain(64, 64, "images/grass_01.bmp");
-  terrain->generate(256);
+  terrain->generate(512);
   terrain->rotate(-75);
   entities = new std::vector<Entity*>();
   Entity* earth = new Sphere(50, "images/earth.bmp");
