@@ -21,9 +21,12 @@ void Terrain::generate(int N){
   FFT fft(N);
   //Apply filter in the frequency domain
   fft.fft2(hmap, hmap, N);
-  fft.lowpass2(hmap, 2.5, N);
+  fft.lowpass2(hmap, 2.3, N);
   fft.ifft2(hmap, hmap, N);
-  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*400,0.0);
+  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*50,0.0);
+  
+  GLfloat tW = dx*N/2;
+  GLfloat tH = dy*N/2;
 
   for(int y = 0; y < N-1; y++){
     for(int x = 0; x < N-1; x++){
@@ -39,9 +42,12 @@ void Terrain::generate(int N){
       glm::vec3 t1Norm = glm::normalize(glm::cross( horEdge, midEdge));
       t1Norm = glm::normalize(glm::vec3(t1Norm.x, t1Norm.y, 1));
       //for(int i = 0; i < 3; i++) normals->push_back(t1Norm);
-      uvs->push_back(glm::vec2(0,0));
-      uvs->push_back(glm::vec2(0,1));
-      uvs->push_back(glm::vec2(1,1));
+      
+
+
+      uvs->push_back(glm::vec2(xc/tW,yc/tH));
+      uvs->push_back(glm::vec2((xc+dx)/tW,yc/tH));
+      uvs->push_back(glm::vec2((xc+dx)/tW,(yc+dy)/tH));
 
       vertices->push_back(glm::vec3(xc, yc, hmap[i].real()));
       vertices->push_back(glm::vec3(xc+dx, yc+dy, hmap[i + N + 1].real()));
@@ -52,10 +58,11 @@ void Terrain::generate(int N){
       glm::vec3 t2Norm = glm::cross(midEdge, vertEdge);
       t2Norm = glm::normalize(glm::vec3(t2Norm.x, t2Norm.y, 1));
       //for(int i = 0; i < 3; i++) normals->push_back(t2Norm);
-      uvs->push_back(glm::vec2(0,0));
-      uvs->push_back(glm::vec2(0,1));
-      uvs->push_back(glm::vec2(1,1));
        
+      uvs->push_back(glm::vec2(xc/tW,yc/tH));
+      uvs->push_back(glm::vec2((xc+dx)/tW,(yc+dy)/tH));
+      uvs->push_back(glm::vec2(xc/tW,(yc+dy)/tH));
+     
       normalMesh[i] += t1Norm + t2Norm;
       normalMesh[i+1] += t1Norm;
       normalMesh[i+ N + 1] += t1Norm + t2Norm;
@@ -86,6 +93,7 @@ void Terrain::generate(int N){
   getModel()->getNormals()->setData(normals);
   getModel()->getUVs()->setData(uvs);
   getModel()->buildVBOIndex(); 
+  std::cout << getModel()->getIndices()->getData()->size();
 //  std::cout << std::max_element(getModel()->getIndices()->getData()->size()) << " " << pow(2, sizeof(unsigned short)*8);
 }
 
