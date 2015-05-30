@@ -21,12 +21,12 @@ void Terrain::generate(int N){
   FFT fft(N);
   //Apply filter in the frequency domain
   fft.fft2(hmap, hmap, N);
-  fft.lowpass2(hmap, 2.3, N);
+  fft.lowpass2(hmap, 1.8, N);
   fft.ifft2(hmap, hmap, N);
-  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*50,0.0);
+  for(int y = 0; y < N; y++) for(int x = 0; x < N; x++) hmap[y*N + x] /= Complex(signs[(y+x)%2]*5,0.0);
   
-  GLfloat tW = dx*N/2;
-  GLfloat tH = dy*N/2;
+  GLfloat tW = dx*w;
+  GLfloat tH = dy*h;
 
   for(int y = 0; y < N-1; y++){
     for(int x = 0; x < N-1; x++){

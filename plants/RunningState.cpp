@@ -16,31 +16,18 @@ RunningState::RunningState(EventManager* evtmgr, Renderer* renderer) : GameState
 
 void RunningState::init(){
   
-  Terrain* terrain = new Terrain(64, 64, "images/grass_01.bmp");
-  terrain->generate(128);
-  terrain->rotate(-75);
   entities = new std::vector<Entity*>();
-  Entity* earth = new Sphere(50, "images/earth.bmp");
-  earth->move(16,16,32);
-/*    Entity* earth = new Sphere(50, "images/earth.bmp"),
-          * mars2 = new Sphere(50, "images/mars.bmp"),
-          * mars = new Sphere(50, "images/grass.bmp");
-    mars->scale(0.5,0.5,0.5);
-    mars->move(-5, 0, 0);
-    mars2->scale(3.0,3.0,3.0);
-    mars2->move(0,0,-4);
-    //sphere->move(i + i % 11,i + i % 19,0);
-    entities->push_back(earth);
-    entities->push_back(mars2);
-    entities->push_back(mars);
-    renderer->addEntity(earth);
-    renderer->addEntity(mars2);
-    renderer->addEntity(mars);*/
-
-  entities->push_back(earth);
-  renderer->addEntity(earth);
-  entities->push_back(terrain);
-  renderer->addEntity(terrain);
+  for(int x = 0; x < 5; x++){
+    for(int y = 0; y < 5; y++){
+      Terrain* terrain = new Terrain(64, 64, "images/rock.bmp");
+      terrain->generate(64);
+      terrain->rotate(-75);
+      terrain->move(64*x, -64*y, 0);
+      entities->push_back(terrain);
+      renderer->addEntity(terrain);
+    }
+  }
+  
 }
 
 // Update game
