@@ -1,5 +1,5 @@
 #include "ModelData.h"
-#include <common/texture.hpp>
+#include "AssetManager.h"
 #include <common/vboindexer.hpp>
 
 ModelData::ModelData(){
@@ -35,7 +35,7 @@ void ModelData::buildVBOIndex(){
 }
 
 void ModelData::loadTexture(std::string str){
-  textureID = loadBMP_custom(str.c_str());
+  textureID = AssetManager::assets->getTextureID(str);
 }
 
 GLuint ModelData::getTexture(){
