@@ -50,13 +50,13 @@ void Renderer::draw(){
     if(programID == -1)
       programID = AssetManager::assets->DEFAULT_SHADER;
     glUseProgram(programID);
-    LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
-    TextureID  = glGetUniformLocation(programID, "myTextureSampler"); 
+    LightID = AssetManager::assets->getUniformLocation(programID, "LightPosition_worldspace");
+    TextureID  = AssetManager::assets->getUniformLocation(programID, "myTextureSampler"); 
 
     mvp = projection * camera->view() * (*e)->getPos();
-    GLuint mvpMatID = glGetUniformLocation(programID, "MVP");
-    GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
-    GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+    GLuint mvpMatID = AssetManager::assets->getUniformLocation(programID, "MVP");
+    GLuint ViewMatrixID = AssetManager::assets->getUniformLocation(programID, "V");
+    GLuint ModelMatrixID = AssetManager::assets->getUniformLocation(programID, "M");
     
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
