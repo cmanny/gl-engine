@@ -8,8 +8,8 @@ Camera::Camera(EventManager* evtmgr){
 
 // Initialise camera
 void Camera::init(int x, int y, int z){
-  evtmgr->enableCallback(new Callback<Camera>(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
-  evtmgr->enableCallback(new Callback<Camera>(this, EVT_KEY, &Camera::keyCallback));
+  evtmgr->enableCallback(make_callback(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
+  evtmgr->enableCallback(make_callback(this, EVT_KEY, &Camera::keyCallback));
   centreX = eyeX = x;
   centreY = eyeY = y;
   eyeZ = z;
@@ -30,7 +30,7 @@ glm::vec3 Camera::getPos(){
   return glm::vec3(eyeX, eyeY, eyeZ);
 }
 void Camera::scrollCallback(Event evt){
-  eyeZ += evt.data[1];
+  eyeZ += 5*evt.data[1];
 }
 
 void Camera::keyCallback(Event evt){

@@ -37,6 +37,11 @@ class Callback : public virtual CallbackBase {
     }
 };
 
+template<class T>
+Callback<T>* make_callback(T* obj, int type, EventCallback<T> callback){
+  return new Callback<T>(obj,type,callback);
+}
+
 #endif
 
 
