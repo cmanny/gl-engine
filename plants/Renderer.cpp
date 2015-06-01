@@ -43,53 +43,55 @@ void Renderer::addEntity(Entity* entity) {
 void Renderer::draw(){
   // Clear the screen
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  for(auto e = entities->begin(); e != entities->end(); e++){
+  for(auto &e : *entities){
 
     GLuint LightID, TextureID, programID;
-    programID = (*e)->getShader();
+    programID = e->getShader();
     if(programID == -1)
       programID = AssetManager::assets->DEFAULT_SHADER;
     glUseProgram(programID);
     LightID = AssetManager::assets->getUniformLocation(programID, "LightPosition_worldspace");
     TextureID  = AssetManager::assets->getUniformLocation(programID, "myTextureSampler"); 
 
-    mvp = projection * camera->view() * (*e)->getPos();
+    mvp = projection * camera->view() * e->getPos();
     GLuint mvpMatID = AssetManager::assets->getUniformLocation(programID, "MVP");
     GLuint ViewMatrixID = AssetManager::assets->getUniformLocation(programID, "V");
     GLuint ModelMatrixID = AssetManager::assets->getUniformLocation(programID, "M");
     
     glUniformMatrix4fv(mvpMatID, 1, GL_FALSE, &mvp[0][0]);
-    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &(*e)->getPos()[0][0]);
+    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &e->getPos()[0][0]);
     glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &camera->view()[0][0]);
      
     glm::vec3 lightPos = glm::vec3(160,160,64);;
     glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);   
     
-    GLuint texture = (*e)->getModel()->getTexture();
+    GLuint texture = e->getModel()->getTexture();
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, (*e)->getModel()->getTexture());
+    glBindTexture(GL_TEXTURE_2D, e->getModel()->getTexture());
     glUniform1i(TextureID, 0);
 
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getVertices()->getBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *e->getModel()->getVertices()->getBuffer());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getUVs()->getBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *e->getModel()->getUVs()->getBuffer());
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);    
     
     glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER, *(*e)->getModel()->getNormals()->getBuffer());
+    glBindBuffer(GL_ARRAY_BUFFER, *e->getModel()->getNormals()->getBuffer());
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *(*e)->getModel()->getIndices()->getBuffer());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *e->getModel()->getIndices()->getBuffer());
 
-    glDrawElements(GL_TRIANGLES, (*e)->getModel()->getIndices()->numVerts(), GL_UNSIGNED_INT, (void*)0); 
+    glDrawElements(GL_TRIANGLES, e->getModel()->getIndices()->numVerts(), GL_UNSIGNED_INT, (void*)0); 
     
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
   }
+
+  glfwSwapBuffers(window);
 }
 
 // Return camera instance
