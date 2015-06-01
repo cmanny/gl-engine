@@ -6,7 +6,7 @@ Terrain::Terrain(GLfloat w, GLfloat h, std::string texture) : distribution(0.5, 
   getModel()->loadTexture(texture);
 }
 
-void Terrain::generate(int N){
+void Terrain::generate(int N, GLfloat scale){
   std::vector<glm::vec3>* vertices = new std::vector<glm::vec3>();
   std::vector<glm::vec2>* uvs = new std::vector<glm::vec2>();
   std::vector<glm::vec3>* normals = new std::vector<glm::vec3>();
@@ -17,7 +17,7 @@ void Terrain::generate(int N){
   int signs[] = {1,-1};
   glm::vec3* normalMesh = new glm::vec3[N*N];
   
-  for(int i = 0; i < N*N; i++) hmap[i] = Complex( (double)i/(N*N)*((double) rand() / RAND_MAX) , 0.0); 
+  for(int i = 0; i < N*N; i++) hmap[i] = Complex( scale*((double) rand() / RAND_MAX) , 0.0); 
   FFT fft(N);
   //Apply filter in the frequency domain
   fft.fft2(hmap, hmap, N);
