@@ -20,8 +20,8 @@ void RunningState::init(){
   for(int x = 0; x < 5; x++){
     for(int y = 0; y < 5; y++){
       Terrain* terrain = new Terrain(64, 64, "images/rock.bmp");
-      terrain->generate(32, 5.0/sqrt(((2.5-x)*(2.5-x)+(2.5-y)*(2.5-y)))/8.0);
-      terrain->rotate(-45);
+      terrain->generate(64, 5.0/sqrt(((2.5-x)*(2.5-x)+(2.5-y)*(2.5-y)))/8.0);
+      terrain->rotate(-65);
       terrain->move((64)*x, -63*y-1, 0);
       entities->push_back(terrain);
       renderer->addEntity(terrain);

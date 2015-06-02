@@ -35,7 +35,7 @@ class Renderer {
     glm::mat4 projection,
               model,
               mvp,
-              lastView;
+              camView;
 
     
     GLCache cache;

@@ -19,17 +19,9 @@ void Renderer::initObjects(){
   camera->init(160,-80,800);
     // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
-  lastView = glm::lookAt(
-    glm::vec3(160,160,600), 
-    glm::vec3(0,0,0), 
-    glm::vec3(0,1,0)
-  );
-
   model = glm::mat4(1.0f);
-  mvp = projection*lastView*model; 
-  
+  mvp = projection*camView*model; 
   cache.loadAssets();
-  
   std::cout << "Renderer::initObjects()\n";
 }
 
@@ -51,12 +43,7 @@ void Renderer::initOpenGL(){
 }
 
 void Renderer::draw(){
-  glm::mat4* camViewp = camera->view();
-  glm::mat4 camView = lastView;
-  if(camViewp) {
-    camView = *camViewp; 
-    lastView = camView;
-  }
+  camView = camera->view();
   for(auto &e : entities){
     if(!e->getModel()->isCurrent()){
       e->getModel()->refreshBuffers();

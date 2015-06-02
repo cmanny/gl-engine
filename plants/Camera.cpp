@@ -23,13 +23,8 @@ void Camera::init(int x, int y, int z){
   );
 }
 
-glm::mat4* Camera::view(){
-  
-  /*std::cout << "view thread: " << std::this_thread::get_id() << "\n";
-  tbb::spin_mutex::scoped_lock jimmers;
-  if(jimmers.try_acquire(mutex))*/ 
-    return &viewMat;
-  //else return 0;
+glm::mat4 Camera::view(){
+    return viewMat;
 }
 
 glm::vec3 Camera::getPos(){

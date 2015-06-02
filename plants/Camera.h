@@ -32,7 +32,7 @@ class Camera {
     glm::vec3 getPos();
     void init(int,int,int);
     void update(double delta);
-    glm::mat4* view();
+    glm::mat4 view();
 };
 
 #endif
