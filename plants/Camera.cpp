@@ -41,8 +41,6 @@ void Camera::scrollCallback(Event evt){
 
 void Camera::keyCallback(Event evt){
   
-  std::cout << "keyCallback thread: " << std::this_thread::get_id() << "\n";
-  
   int key = evt.data[0];
   int scancode = evt.data[1];
   int action = evt.data[2];
@@ -92,16 +90,16 @@ void Camera::update(double delta) {
 
   // Reduce velocity
   if(!moveNorth)
-    if(moveVelY > 0) moveVelY -= slow;
-
-  if(!moveEast)
-    if(moveVelX > 0) moveVelX -= slow;
-
+    if(moveVelY > 0) {moveVelY -= slow;}
+  else
   if(!moveSouth)
-    if(moveVelY < 0) moveVelY += slow;
-
+    if(moveVelY < 0) {moveVelY += slow;}
+  
+  if(!moveEast)
+    if(moveVelX > 0) {moveVelX -= slow;}
+  else
   if(!moveWest)
-    if(moveVelX < 0) moveVelX += slow;
+    if(moveVelX < 0) {moveVelX += slow;}
 
   // Ensure velocity doesn't exceed bounds
   if(moveVelX > max) 
@@ -120,7 +118,6 @@ void Camera::update(double delta) {
 
    
   tbb::spin_mutex::scoped_lock lock(mutex); 
-    //std::cout << "update thread: " << std::this_thread::get_id() << "\n";
   viewMat = glm::lookAt(
     glm::vec3(eyeX, eyeY, eyeZ),
     glm::vec3(centreX, centreY, centreZ),
