@@ -3,6 +3,9 @@
 #include "VertexData.h"
 #include <string>
 #include <glm/glm.hpp>
+#include <common/texture.hpp>
+
+#include <tbb/atomic.h>
 
 class ModelData {
   private:
@@ -13,11 +16,21 @@ class ModelData {
     VertexData<unsigned int>* indices;
     GLuint textureID;
 
+    std::string texPath;
+
+    tbb::atomic<bool> is_current;
   public:
     ModelData();
 
+    tbb::atomic<bool> isCurrent();
+    void makeCurrent();
+
     void loadTexture(std::string);
+    void refreshBuffers();
     GLuint getTexture();
+    std::string getTexturePath();
+    void setTexturePath(std::string);
+    void setTextureID(GLuint);
     void buildVBOIndex();
 
     VertexData<glm::vec3>* getVertices();

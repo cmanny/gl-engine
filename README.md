@@ -11,10 +11,11 @@ First ensure you have the following libraries:
 
 On linux:
 
-`cmake make g++ libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev`
+`cmake make g++ libx11-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libxext-dev libtbb-dev`
 
 On Windows:
-Follow the instructions here `http://www.opengl-tutorial.org/beginners-tutorials/tutorial-1-opening-a-window/`
+Windows should already have the required packages through the correct drivers installation. However, you will need 
+to download Cmake and TBB (Threading Building Blocks), making sure that the compilation can find TBB in the environment. (It is linked with -ltbb)
 
 
 Type the following:

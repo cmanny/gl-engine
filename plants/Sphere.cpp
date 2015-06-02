@@ -63,7 +63,7 @@ Sphere::Sphere(GLfloat detail, std::string filepath){
   getModel()->getVertices()->setData(vertices);
   getModel()->getUVs()->setData(uvs);
   getModel()->getNormals()->setData(normals);
-  getModel()->loadTexture(filepath);
+  getModel()->setTexturePath(filepath);
   getModel()->buildVBOIndex();
   angle = 0;
 }

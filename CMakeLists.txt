@@ -40,7 +40,7 @@ include_directories(
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3")
 
 set(ALL_LIBS
-  -w
+  -w -ltbb
 	${OPENGL_LIBRARY}
 	GLFW_303
 	GLEW_190

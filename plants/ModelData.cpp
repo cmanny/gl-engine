@@ -1,5 +1,4 @@
 #include "ModelData.h"
-#include "AssetManager.h"
 #include <common/vboindexer.hpp>
 
 ModelData::ModelData(){
@@ -8,6 +7,7 @@ ModelData::ModelData(){
   normals = new VertexData<glm::vec3>(GL_ARRAY_BUFFER);
   colours = new VertexData<glm::vec3>(GL_ARRAY_BUFFER);
   indices = new VertexData<unsigned int>(GL_ELEMENT_ARRAY_BUFFER);
+  is_current = false;
 }
 
 void ModelData::buildVBOIndex(){
@@ -28,18 +28,22 @@ void ModelData::buildVBOIndex(){
   normals->setData(indexed_normals);
   uvs->setData(indexed_uvs);
   
-  indices->refreshBuffer(); 
-  vertices->refreshBuffer();
-  normals->refreshBuffer();
-  uvs->refreshBuffer();
 }
 
-void ModelData::loadTexture(std::string str){
-  textureID = AssetManager::assets->getTextureID(str);
+void ModelData::setTexturePath(std::string str){
+  texPath = str;
+}
+
+std::string ModelData::getTexturePath(){
+  return texPath;
 }
 
 GLuint ModelData::getTexture(){
   return textureID;
+}
+
+void ModelData::setTextureID(GLuint id){
+  textureID = id;
 }
 
 VertexData<glm::vec3>* ModelData::getVertices(){
@@ -62,3 +66,18 @@ VertexData<unsigned int>* ModelData::getIndices(){
   return indices;
 }
 
+void ModelData::refreshBuffers(){
+
+  indices->refreshBuffer(); 
+  vertices->refreshBuffer();
+  normals->refreshBuffer();
+  uvs->refreshBuffer();
+}
+
+tbb::atomic<bool> ModelData::isCurrent(){
+  return is_current;
+}
+
+void ModelData::makeCurrent(){
+  is_current = true;
+}

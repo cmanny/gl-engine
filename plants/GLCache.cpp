@@ -1,26 +1,22 @@
-#include "AssetManager.h"
+#include "GLCache.h"
 #include <common/texture.hpp>
 
-AssetManager* AssetManager::assets = new AssetManager();
-
-
 // Constructor
-AssetManager::AssetManager() {
+GLCache::GLCache() {
 }
 
 // Destructor
-AssetManager::~AssetManager() {
-  //delete &DEFAULT_SHADER;
+GLCache::~GLCache() {
 }
 
 // Load assets
-void AssetManager::loadAssets() {
+void GLCache::loadAssets() {
   
   // Define default shader for all objects without a specified shader
  DEFAULT_SHADER = LoadShaders( "shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader" );
 }
 
-GLuint AssetManager::getTextureID(std::string texPath){
+GLuint GLCache::getTextureID(std::string texPath){
   auto it = texMap.find(texPath);
   if(it == texMap.end()){
     //load the texture
@@ -29,7 +25,7 @@ GLuint AssetManager::getTextureID(std::string texPath){
   return it->second;
 }
 
-GLuint AssetManager::getUniformLocation(GLuint pID, std::string var){
+GLuint GLCache::getUniformLocation(GLuint pID, std::string var){
   auto progMap = uniformMap.find(pID);
   if(progMap == uniformMap.end())
     progMap = uniformMap.insert(

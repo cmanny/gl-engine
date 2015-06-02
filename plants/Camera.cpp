@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include <iostream>
 
 // Constructor
 Camera::Camera(EventManager* evtmgr){
@@ -19,11 +18,10 @@ void Camera::init(int x, int y, int z){
 }
 
 glm::mat4 Camera::view(){
-  return glm::lookAt(
-    glm::vec3(eyeX, eyeY, eyeZ),
-    glm::vec3(centreX, centreY, centreZ),
-    glm::vec3(0, 1, 0)
-    );
+  
+  {tbb::mutex::scoped_lock lock(mutex); 
+    std::cout << "view thread: " << std::this_thread::get_id() << "\n";
+  return viewMat;}
 }
 
 glm::vec3 Camera::getPos(){
@@ -34,6 +32,9 @@ void Camera::scrollCallback(Event evt){
 }
 
 void Camera::keyCallback(Event evt){
+  
+  std::cout << "keyCallback thread: " << std::this_thread::get_id() << "\n";
+  
   int key = evt.data[0];
   int scancode = evt.data[1];
   int action = evt.data[2];
@@ -67,7 +68,7 @@ void Camera::keyCallback(Event evt){
 
 // Update camera
 void Camera::update(double delta) {
-  double factor = (double) 1/32;
+  double factor = (double)1/64000;
   double max = factor*8;
   double slow = factor/8;
 
@@ -108,7 +109,15 @@ void Camera::update(double delta) {
   // Update camera position
   eyeX = centreX += moveVelX;
   eyeY = centreY += moveVelY;  
-  
+
+   
+  {tbb::mutex::scoped_lock lock(mutex); 
+    //std::cout << "update thread: " << std::this_thread::get_id() << "\n";
+  viewMat = glm::lookAt(
+    glm::vec3(eyeX, eyeY, eyeZ),
+    glm::vec3(centreX, centreY, centreZ),
+    glm::vec3(0, 1, 0)
+  );}
 }
 
 

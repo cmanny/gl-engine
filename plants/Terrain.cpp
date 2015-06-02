@@ -3,7 +3,7 @@
 Terrain::Terrain(GLfloat w, GLfloat h, std::string texture) : distribution(0.5, 0.25){
   this->w = w;
   this->h = h;
-  getModel()->loadTexture(texture);
+  getModel()->setTexturePath(texture);
 }
 
 void Terrain::generate(int N, GLfloat scale){

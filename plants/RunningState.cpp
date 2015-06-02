@@ -26,8 +26,7 @@ void RunningState::init(){
       entities->push_back(terrain);
       renderer->addEntity(terrain);
     }
-  }
-  
+  } 
 }
 
 // Update game
@@ -42,7 +41,7 @@ GameState* RunningState::update(double delta) {
 
   // Update entities
   for(auto e = entities->begin(); e != entities->end(); ++e){
-   (*e)->update(delta);
+    (*e)->update(delta);
   }
 
   return this;

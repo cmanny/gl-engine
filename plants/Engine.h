@@ -1,16 +1,19 @@
 #ifndef ENGINE_H
 #define ENGINE_H
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
+#include <iostream>
+
 #include <GL/glew.h>
 #include <glfw3.h>
 #include <glm/glm.hpp>
 
+#include <tbb/compat/thread>
+#include <tbb/atomic.h>
+#include <thread>
+
 #include "EventManager.h"
+#include "Camera.h"
 #include "Renderer.h"
-#include "AssetManager.h"
 
 using namespace glm;
 using namespace std;
@@ -20,11 +23,19 @@ class Engine {
     EventManager* evtmgr;
     Renderer* renderer;
     GLFWwindow* window; 
+    Camera* camera;
 
   private:  
-    int width, height, frameRate, desktopWidth, desktopHeight;
+    int width, 
+        height, 
+        frameRate, 
+        desktopWidth, 
+        desktopHeight;
+    bool fullscreen; 
     string title;
-    bool running, fullscreen; 
+    
+    tbb::atomic<bool> running;
+    
     void callback(Event evt);
 
   public:

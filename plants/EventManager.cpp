@@ -33,7 +33,6 @@ bool EventManager::disableCallback(CallbackBase* c){
   return false;
 }
 void EventManager::keyCallback(GLFWwindow* w,int key,int scancode,int action,int mods){
-  cout << "Key callbacks" << "\n";
   for(auto it = instance->callbacks[EVT_KEY]->begin(); it != instance->callbacks[EVT_KEY]->end(); ++it){
     Event evt = {key,scancode,action,mods};
     //Dat cast
