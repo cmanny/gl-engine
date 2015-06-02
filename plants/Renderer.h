@@ -33,9 +33,9 @@ class Renderer {
     GLuint VertexArrayID,  
            vertexbuffer;
     glm::mat4 projection,
-              view,
               model,
-              mvp;
+              mvp,
+              lastView;
 
     
     GLCache cache;

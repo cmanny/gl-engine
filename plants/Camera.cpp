@@ -7,6 +7,7 @@ Camera::Camera(EventManager* evtmgr){
 
 // Initialise camera
 void Camera::init(int x, int y, int z){
+  tbb::spin_mutex::scoped_lock lock(mutex);
   evtmgr->enableCallback(make_callback(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
   evtmgr->enableCallback(make_callback(this, EVT_KEY, &Camera::keyCallback));
   centreX = eyeX = x;
@@ -15,13 +16,20 @@ void Camera::init(int x, int y, int z){
   centreZ = 0;
   moveVelX = moveVelY = moveVelZ = 0;
   moveNorth = moveEast = moveSouth = moveWest = rotNorth = rotSouth = false;
+  viewMat = glm::lookAt(
+    glm::vec3(eyeX, eyeY, eyeZ),
+    glm::vec3(centreX, centreY, centreZ),
+    glm::vec3(0, 1, 0)
+  );
 }
 
-glm::mat4 Camera::view(){
+glm::mat4* Camera::view(){
   
-  {tbb::mutex::scoped_lock lock(mutex); 
-    std::cout << "view thread: " << std::this_thread::get_id() << "\n";
-  return viewMat;}
+  /*std::cout << "view thread: " << std::this_thread::get_id() << "\n";
+  tbb::spin_mutex::scoped_lock jimmers;
+  if(jimmers.try_acquire(mutex))*/ 
+    return &viewMat;
+  //else return 0;
 }
 
 glm::vec3 Camera::getPos(){
@@ -68,7 +76,7 @@ void Camera::keyCallback(Event evt){
 
 // Update camera
 void Camera::update(double delta) {
-  double factor = (double)1/64000;
+  double factor = (double)delta*8;
   double max = factor*8;
   double slow = factor/8;
 
@@ -111,13 +119,13 @@ void Camera::update(double delta) {
   eyeY = centreY += moveVelY;  
 
    
-  {tbb::mutex::scoped_lock lock(mutex); 
+  tbb::spin_mutex::scoped_lock lock(mutex); 
     //std::cout << "update thread: " << std::this_thread::get_id() << "\n";
   viewMat = glm::lookAt(
     glm::vec3(eyeX, eyeY, eyeZ),
     glm::vec3(centreX, centreY, centreZ),
     glm::vec3(0, 1, 0)
-  );}
+  );
 }
 
 

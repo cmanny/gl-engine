@@ -8,7 +8,6 @@ Renderer::Renderer(GLFWwindow* w, Camera* c, int scrW, int scrH, tbb::atomic<boo
   this->window = w; 
   this->camera = c;
   this->running = running; 
-  //entities = new tbb::concurrent_vector<Entity*>();
 } 
 
 // Add entity
@@ -17,17 +16,17 @@ void Renderer::addEntity(Entity* entity) {
 }
 
 void Renderer::initObjects(){  
-  camera->init(64,32,600);
+  camera->init(160,-80,800);
     // Setup perspective
   projection = glm::perspective(20.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
-  view = glm::lookAt(
-    glm::vec3(0,0,16), 
+  lastView = glm::lookAt(
+    glm::vec3(160,160,600), 
     glm::vec3(0,0,0), 
     glm::vec3(0,1,0)
   );
 
   model = glm::mat4(1.0f);
-  mvp = projection*view*model; 
+  mvp = projection*lastView*model; 
   
   cache.loadAssets();
   
@@ -52,7 +51,12 @@ void Renderer::initOpenGL(){
 }
 
 void Renderer::draw(){
-  glm::mat4 camView = camera->view();
+  glm::mat4* camViewp = camera->view();
+  glm::mat4 camView = lastView;
+  if(camViewp) {
+    camView = *camViewp; 
+    lastView = camView;
+  }
   for(auto &e : entities){
     if(!e->getModel()->isCurrent()){
       e->getModel()->refreshBuffers();

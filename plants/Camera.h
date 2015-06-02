@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include <tbb/mutex.h>
+#include <tbb/spin_mutex.h>
 #include <thread>
 
 class Camera {
@@ -25,14 +25,14 @@ class Camera {
     void scrollCallback(Event);
     void keyCallback(Event);
 
-    tbb::mutex mutex;
+    tbb::spin_mutex mutex;
 
   public:
     Camera(EventManager* evtmgr);
     glm::vec3 getPos();
     void init(int,int,int);
     void update(double delta);
-    glm::mat4 view();
+    glm::mat4* view();
 };
 
 #endif

@@ -72,7 +72,6 @@ void Engine::start() {
      double currentTime = glfwGetTime();
      double delta = currentTime - lastTime;
      lastTime = currentTime;
-     std::cout << "delta time:" << delta << "\n";
      update(delta);
      glfwPollEvents();
   } 
