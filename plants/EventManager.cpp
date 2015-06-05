@@ -3,17 +3,21 @@
 EventManager* EventManager::instance = 0;
 
 EventManager::EventManager(GLFWwindow* w) {
-  window = w;
-  instance = this;
-  glfwSetKeyCallback(w, EventManager::keyCallback);
-  glfwSetScrollCallback(w, &EventManager::mouseScrollCallback);
-  glfwSetMouseButtonCallback(w, &EventManager::mouseButtonCallback);
-  glfwSetCursorPosCallback(w, &EventManager::mouseMoveCallback);
+  if(instance == 0){ 
+    instance = this;
+    window = w;
+    glfwSetKeyCallback(w, EventManager::keyCallback);
+    glfwSetScrollCallback(w, &EventManager::mouseScrollCallback);
+    glfwSetMouseButtonCallback(w, &EventManager::mouseButtonCallback);
+    glfwSetCursorPosCallback(w, &EventManager::mouseMoveCallback);
 
-  for(int i = 0; i < NUM_EVTS; i++)
-    callbacks.insert(
-        std::pair< int,list<CallbackBase*>* >(i,new list<CallbackBase*>)
-        );
+    for(int i = 0; i < NUM_EVTS; i++)
+      callbacks.insert(
+          std::pair< int,list<CallbackBase*>* >(i,new list<CallbackBase*>)
+          );
+  }else{
+    std::cerr << "EventManager: Only one instance should exist!";
+  }
 }
 
 bool EventManager::enableCallback(CallbackBase* c){
