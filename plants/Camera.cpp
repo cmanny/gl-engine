@@ -8,8 +8,8 @@ Camera::Camera(EventManager* evtmgr){
 // Initialise camera
 void Camera::init(int x, int y, int z){
   tbb::spin_mutex::scoped_lock lock(mutex);
-  evtmgr->enableCallback(make_callback(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
-  evtmgr->enableCallback(make_callback(this, EVT_KEY, &Camera::keyCallback));
+  evtmgr->enableCallback(memberCallback(&Camera::scrollCallback, this, EVT_MOUSESCROLL));
+  evtmgr->enableCallback(memberCallback(&Camera::keyCallback, this, EVT_KEY));
   centreX = eyeX = x;
   centreY = eyeY = y;
   eyeZ = z;

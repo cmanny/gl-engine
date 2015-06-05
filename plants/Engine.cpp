@@ -65,7 +65,7 @@ void Engine::callback(Event evt){
 void Engine::start() {
   // Define start time
   double lastTime = glfwGetTime(); 
-  evtmgr->enableCallback(make_callback(this, EVT_KEY, &Engine::callback));
+  evtmgr->enableCallback(memberCallback(&Engine::callback, this, EVT_KEY));
   std::thread renderThread(std::ref(*renderer));
   // Main game loop
   do {

@@ -17,10 +17,10 @@ void ComponentManager::enable() {
     return;
   enabledCallbacks = true;
 
-  evtmgr->enableCallback(new Callback<ComponentManager>(this, EVT_MOUSEMOVE, &ComponentManager::mouseMove));
-  evtmgr->enableCallback(new Callback<ComponentManager>(this, EVT_MOUSESCROLL, &ComponentManager::mouseScroll));
-  evtmgr->enableCallback(new Callback<ComponentManager>(this, EVT_MOUSEBUTTON, &ComponentManager::mouseButton));
-  evtmgr->enableCallback(new Callback<ComponentManager>(this, EVT_KEY, &ComponentManager::keystroke));
+  evtmgr->enableCallback(memberCallback(&ComponentManager::mouseMove, this, EVT_MOUSEMOVE));
+  evtmgr->enableCallback(memberCallback(&ComponentManager::mouseScroll, this, EVT_MOUSESCROLL));
+  evtmgr->enableCallback(memberCallback(&ComponentManager::mouseButton, this, EVT_MOUSEBUTTON));
+  evtmgr->enableCallback(memberCallback(&ComponentManager::keystroke, this, EVT_KEY));
 }
 
 // Disable callbacks
