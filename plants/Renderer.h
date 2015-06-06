@@ -20,6 +20,12 @@
 
 using namespace std;
 
+/**
+ * The Renderer class is reponsible for the graphical part of the system and runs in it's own thread
+ * It also handles all calls to OpenGL as they can only be done in one thread at a time, so they are done in only this one for simplicity
+ * The renderer will run in an infinite loop taking and executing commands from a concurrently safe queue.
+ */
+
 class Renderer {
   private:
     GLFWwindow* window;

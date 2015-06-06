@@ -1,6 +1,7 @@
 #include "Renderer.h"
 
-// Constructor
+
+/** Renderer constructor, which is executed in the main thread, only once */
 Renderer::Renderer(GLFWwindow* w, Camera* c, int scrW, int scrH, tbb::atomic<bool>* running){
   std::cout << "Renderer init\n";
   this->screenW = scrW;
@@ -10,11 +11,15 @@ Renderer::Renderer(GLFWwindow* w, Camera* c, int scrW, int scrH, tbb::atomic<boo
   this->running = running; 
 } 
 
-// Add entity
+/**
+ * Entities are added through this function, which is thread safe */
 void Renderer::addEntity(Entity* entity) {
   entities.push_back(entity);
 }
 
+
+/**
+ * Initialise all non-OpenGL objects key to the renderer */
 void Renderer::initObjects(){  
   camera->init(160,-80,800);
     // Setup perspective
@@ -25,6 +30,8 @@ void Renderer::initObjects(){
   std::cout << "Renderer::initObjects()\n";
 }
 
+
+/** OpenGL initialisation calls */
 void Renderer::initOpenGL(){
   glfwMakeContextCurrent(window);
   glewExperimental=true;
@@ -42,6 +49,8 @@ void Renderer::initOpenGL(){
   std::cout << "Renderer::initOpenGL\n";
 }
 
+/**
+ * Responsible for drawing entities on the screen only, not clearing/swapping */
 void Renderer::draw(){
   camView = camera->view();
   for(auto &e : entities){
@@ -96,7 +105,8 @@ void Renderer::draw(){
   }
 }
 
-// Renderer thread function
+/** Renderer thread functor, which is called from the main thread.
+  * An atomic bool is used to decide whether the Renderer should still be running */
 void Renderer::operator()(){
   initOpenGL();
   initObjects();
