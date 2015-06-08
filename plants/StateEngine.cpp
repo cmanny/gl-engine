@@ -2,7 +2,8 @@
 #include "RunningState.h"
 #include "LoadingState.h"
 
-// Constructor
+/**
+ * Initialisation routine */
 StateEngine::StateEngine(int width, int height, int frameRate, string title) : 
   Engine(width, height, frameRate, title) {
     this->state = new LoadingState(evtmgr, renderer);
@@ -12,13 +13,19 @@ StateEngine::StateEngine(int width, int height, int frameRate, string title) :
     lastTime = 0;
 }
 
-// Set game state
+/**
+ * When setting a new state, we call the dispose method of the old state so that it can manage
+ * destruction of held objects 
+ */
 void StateEngine::setState(GameState* state) {
   this->state->dispose();
   this->state = state;
 }
 
-// Override update method
+/**
+ * Overriding the pure virtual method, the update function simply evaluates the state returned by
+ * the current state, and if it is not the same, we set the new state running, and call the update method
+ */
 void StateEngine::update(double delta) {
  
   // Update state 
@@ -32,7 +39,9 @@ void StateEngine::update(double delta) {
   setWindowFPS();
 }
 
-// Update FPS counter
+/**
+ * Shows a simple FPS counter in the title bar 
+ */
 void StateEngine::setWindowFPS ()
 {
     double currentTime = glfwGetTime ();

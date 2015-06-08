@@ -4,6 +4,10 @@
 #include "Engine.h"
 #include "GameState.h"
 
+/**
+ * The state engine derives from the abstract Engine class and manages the current state of the game
+ */
+
 class StateEngine: public Engine {
     GameState* state;
     int nbFrames;
