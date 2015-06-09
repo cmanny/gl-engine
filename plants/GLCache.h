@@ -8,6 +8,10 @@
 #include <map>
 #include <string>
 
+
+/**
+ * The GLCache class caches assets or values of OpenGL calls so that they can be easily accessed with minimal overhead
+ */
 class GLCache {
   private:
     std::map<std::string, GLuint> texMap;
