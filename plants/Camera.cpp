@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include <iostream>
 
 // Constructor
 Camera::Camera(EventManager* evtmgr){
@@ -8,29 +7,35 @@ Camera::Camera(EventManager* evtmgr){
 
 // Initialise camera
 void Camera::init(int x, int y, int z){
-  evtmgr->enableCallback(new Callback<Camera>(this, EVT_MOUSESCROLL, &Camera::scrollCallback));
-  evtmgr->enableCallback(new Callback<Camera>(this, EVT_KEY, &Camera::keyCallback));
+  tbb::spin_mutex::scoped_lock lock(mutex);
+  evtmgr->enableCallback(memberCallback(&Camera::scrollCallback, this, EVT_MOUSESCROLL));
+  evtmgr->enableCallback(memberCallback(&Camera::keyCallback, this, EVT_KEY));
   centreX = eyeX = x;
   centreY = eyeY = y;
   eyeZ = z;
   centreZ = 0;
   moveVelX = moveVelY = moveVelZ = 0;
-  moveNorth = moveEast = moveSouth = moveWest = false;
-}
-
-glm::mat4 Camera::view(){
-  return glm::lookAt(
+  moveNorth = moveEast = moveSouth = moveWest = rotNorth = rotSouth = false;
+  viewMat = glm::lookAt(
     glm::vec3(eyeX, eyeY, eyeZ),
     glm::vec3(centreX, centreY, centreZ),
     glm::vec3(0, 1, 0)
-    );
+  );
 }
 
+glm::mat4 Camera::view(){
+    return viewMat;
+}
+
+glm::vec3 Camera::getPos(){
+  return glm::vec3(eyeX, eyeY, eyeZ);
+}
 void Camera::scrollCallback(Event evt){
-  eyeZ += evt.data[1];
+  eyeZ += 5*evt.data[1];
 }
 
 void Camera::keyCallback(Event evt){
+  
   int key = evt.data[0];
   int scancode = evt.data[1];
   int action = evt.data[2];
@@ -44,6 +49,8 @@ void Camera::keyCallback(Event evt){
         case GLFW_KEY_D: moveEast= true; break;
         case GLFW_KEY_W: moveNorth = true; break;
         case GLFW_KEY_S: moveSouth = true; break;
+        case GLFW_KEY_E: rotSouth = true; break;
+        case GLFW_KEY_Q: rotNorth = true; break;
       }
     break;
     
@@ -52,6 +59,8 @@ void Camera::keyCallback(Event evt){
         case GLFW_KEY_A: moveWest = false; break;
         case GLFW_KEY_D: moveEast= false; break;
         case GLFW_KEY_W: moveNorth = false; break;
+        case GLFW_KEY_E: rotSouth = false; break;
+        case GLFW_KEY_Q: rotNorth = false; break;
         case GLFW_KEY_S: moveSouth = false; break;
       }
     break;
@@ -60,7 +69,7 @@ void Camera::keyCallback(Event evt){
 
 // Update camera
 void Camera::update(double delta) {
-  double factor = (double) 1/32;
+  double factor = (double)delta*8;
   double max = factor*8;
   double slow = factor/8;
 
@@ -76,16 +85,16 @@ void Camera::update(double delta) {
 
   // Reduce velocity
   if(!moveNorth)
-    if(moveVelY > 0) moveVelY -= slow;
-
-  if(!moveEast)
-    if(moveVelX > 0) moveVelX -= slow;
-
+    if(moveVelY > 0) {moveVelY -= slow;}
+  else
   if(!moveSouth)
-    if(moveVelY < 0) moveVelY += slow;
-
+    if(moveVelY < 0) {moveVelY += slow;}
+  
+  if(!moveEast)
+    if(moveVelX > 0) {moveVelX -= slow;}
+  else
   if(!moveWest)
-    if(moveVelX < 0) moveVelX += slow;
+    if(moveVelX < 0) {moveVelX += slow;}
 
   // Ensure velocity doesn't exceed bounds
   if(moveVelX > max) 
@@ -101,7 +110,14 @@ void Camera::update(double delta) {
   // Update camera position
   eyeX = centreX += moveVelX;
   eyeY = centreY += moveVelY;  
-  
+
+   
+  tbb::spin_mutex::scoped_lock lock(mutex); 
+  viewMat = glm::lookAt(
+    glm::vec3(eyeX, eyeY, eyeZ),
+    glm::vec3(centreX, centreY, centreZ),
+    glm::vec3(0, 1, 0)
+  );
 }
 
 

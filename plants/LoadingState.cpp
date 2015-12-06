@@ -1,5 +1,4 @@
 #include "LoadingState.h"
-#include "AssetManager.h"
 #include "MenuState.h"
 #include <iostream>
 
@@ -12,14 +11,15 @@ LoadingState::LoadingState(EventManager* evtmgr, Renderer* renderer) :
 
 // Initialise state
 void LoadingState::init() {
-
-  AssetManager::assets->loadAssets();
 }
 
 // Update 
 GameState* LoadingState::update(double delta) {
 
-  return new MenuState(evtmgr, renderer);
+  GameState* g = new MenuState(evtmgr, renderer);
+  g->init();
+
+  return g;
 }
 
 // Free resources

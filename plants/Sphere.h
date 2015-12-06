@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include <iostream>
+#include <string>
 #include <glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,7 +13,7 @@ class Sphere : public Entity {
   private:
     int detail;
   public:
-    Sphere(GLfloat);
+    Sphere(GLfloat, std::string);
     void update(double);
 };
 #endif

@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-
-#include <GL/glew.h>
-#include <glfw3.h>
-#include <glm/glm.hpp>
-#include <iostream>
-
 #include "Engine.h"
-#include "Renderer.h"
-#include "AssetManager.h"
 
 using namespace glm;
 using namespace std;
@@ -21,24 +10,22 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
   frameRate = _frameRate;
   title = _title;
   fullscreen = false;
-
-  // Instantiate renderer instanc
-  cout << "Starting Engine.\n";
   running = true; 
 
-  // Initialise GLFW
+  cout << "Starting Engine.\n";
+
+  // ---- Initialise the window manager, GLFW ----
+  // GLFW is setup in the main thread since the window event
+  // function requires the main thread, which also suits us.
   if(!glfwInit()) {
     cerr << "Error initializing GLFW.\n";
     exit(-1);
   }
-
   // Set OpenGL Window hints
-
+  glfwWindowHint(GLFW_SAMPLES, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
-
   // Open a window and create its OpenGL context 
   window = glfwCreateWindow( width, height, title.c_str(), NULL, NULL);
   if( window == NULL ){
@@ -46,26 +33,17 @@ Engine::Engine(int _width, int _height, int _frameRate, string _title) {
       glfwTerminate();
       exit(-1);
   }
-  
-  
-  // Initialise GLEW
-  glfwMakeContextCurrent(window); 
-  glewExperimental=true; // Needed in core profile
-  if (glewInit() != GLEW_OK) {
-    fprintf(stderr, "Error initializing GLEW.\n");
-    exit(-1);
-  }
-  
   const GLFWvidmode* desktopMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
   desktopHeight = desktopMode->height;
   desktopWidth = desktopMode->width;
-
-    // Ensure capture of escape key
+  // Ensure capture of escape key
   glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-  
+  // ---- GLFW initialisation finished. ----
+
   // Additional setup of other components
   evtmgr = new EventManager(window);
-  renderer = new Renderer(evtmgr, width, height);
+  camera = new Camera(evtmgr);
+  renderer = new Renderer(window, camera, width, height, &running);
 }
 
 void Engine::callback(Event evt){
@@ -87,24 +65,20 @@ void Engine::callback(Event evt){
 void Engine::start() {
   // Define start time
   double lastTime = glfwGetTime(); 
-  evtmgr->enableCallback(new Callback<Engine>(this, EVT_KEY, &Engine::callback));
+  evtmgr->enableCallback(memberCallback(&Engine::callback, this, EVT_KEY));
+  std::thread renderThread(std::ref(*renderer));
   // Main game loop
-   do {
-     
-     // Calculate delta
+  do {
      double currentTime = glfwGetTime();
      double delta = currentTime - lastTime;
-
-     // Invoke sub-class functions
+     lastTime = currentTime;
      update(delta);
-     renderer->draw(); 
-
-     glfwSwapBuffers(window);
-     //glfwWaitEvents(); 
      glfwPollEvents();
   } 
-  
-  // Check if the ESC key was pressed or the window was closed
   while(running);
+
+  renderThread.join();
+
+
 }
 

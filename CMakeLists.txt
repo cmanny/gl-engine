@@ -40,7 +40,7 @@ include_directories(
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3")
 
 set(ALL_LIBS
-  -w
+  -w -ltbb
 	${OPENGL_LIBRARY}
 	GLFW_303
 	GLEW_190
@@ -55,15 +55,20 @@ add_definitions(
 )
 FILE(GLOB plantSources plants/*.cpp)
 
+FILE(GLOB shaders plants/shaders/*.*shader)
+
 # Tutorial 1
 add_executable(plants 
   ${plantSources}
   common/shader.cpp
   common/shader.hpp
-  plants/shaders/SimpleFragmentShader.fragmentshader
-  plants/shaders/SimpleVertexShader.vertexshader
-  plants/shaders/SimpleTransform.vertexshader
-  plants/shaders/SingleColour.fragmentshader
+  common/texture.cpp
+  common/texture.hpp
+  common/vboindexer.hpp
+  common/vboindexer.cpp
+  common/objloader.hpp
+  common/objloader.cpp
+  ${shaders}
 )
 
 target_link_libraries(plants

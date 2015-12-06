@@ -1,41 +1,26 @@
 #ifndef EVENT_H
 #define EVENT_H
 #include <list>
+#include <functional>
 
 typedef struct Event {
   int data[4];
 } Event;
 
-template <typename T>
-using EventCallback = void (T::*)(Event p);
+typedef std::function<void(Event)> EventCallback;
 
-class CallbackBase {
-  public:
-    virtual void callback(Event) = 0;
-    virtual int getType() = 0;
-};
+typedef struct Callback {
+  EventCallback fn;
+  int type;
+} Callback;
 
-template<class T>
-class Callback : public virtual CallbackBase {
-  private:
-    int type;
-    T* object;
-    EventCallback<T> evtCallback;
-    
-  public:
-    Callback(T* t, int type, EventCallback<T>  callback){
-      this->object = t;
-      this->type = type;
-      this->evtCallback = callback;
-    }
-    void callback(Event evt){
-      (object->*evtCallback)(evt);
-
-    }
-    int getType(){
-      return type;
-    }
-};
+template<typename O, typename F>
+Callback* memberCallback( F evt, O obj, int type){
+  Callback* c = new Callback();
+  c->fn = std::bind(evt, obj, std::placeholders::_1);
+  c->type = type;
+  return c;
+}
 
 #endif
 

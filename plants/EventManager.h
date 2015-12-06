@@ -4,10 +4,9 @@
 #include <map>
 #include <list>
 #include <iostream>
+#include <functional>
 
 #include "Event.h"
-
-
 
 #define EVT_MOUSEMOVE 0
 #define EVT_MOUSESCROLL 1
@@ -22,7 +21,7 @@ class EventManager {
   
 
   private:
-    map< int,list<CallbackBase*>* > callbacks ;
+    map<int, list<Callback*>*> callbacks ;
     GLFWwindow *window;
     static EventManager* instance;    
     // The default callbacks for the GLFW function calls
@@ -36,8 +35,8 @@ class EventManager {
   public:
     EventManager(GLFWwindow* w);
 
-    bool enableCallback(CallbackBase*);
-    bool disableCallback(CallbackBase*); 
+    bool enableCallback(Callback*);
+    bool disableCallback(Callback*); 
 
 };
 
